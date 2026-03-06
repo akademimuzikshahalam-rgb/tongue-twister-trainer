@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="en" class="h-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Tongue Twister Trainer&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;amp;family=Inter:wght@400;500&amp;amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>h1, h2, h3 {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Poppins', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>html, body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.app-wrapper {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow-auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.card {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>max-width: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 40px 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header-section h1 {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 0 8px 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 32px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header-section p {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0.9;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.content-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 40px 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.twister-box {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #f8f9ff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 2px solid #e0e0e0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.counter {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #999;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.mic-button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 80px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 40px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transition: transform 0.2s, box-shadow 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.mic-button:hover:not(.listening) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(1.05);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.mic-button.listening {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>animation: pulse-button 1.5s infinite;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>@keyframes pulse-button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>0% {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>50% {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>100% {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.status-text {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #666;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.results-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-top: 1px solid #eee;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.results-section.show {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.results-label {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #999;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>text-transform: uppercase;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.transcript-box {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #f8f9ff;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-style: italic;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.score-display {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.score-ring {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: conic-gradient(#667eea var(--score-percent), #e0e0e0 var(--score-percent));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.score-inner {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 88px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 88px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #667eea;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.feedback-text {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #666;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>min-height: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.button-group {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.button-group button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex: 1;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.try-again-btn {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.try-again-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>transform: translateY(-2px);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.next-btn {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #f0f0f0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.next-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: #e0e0e0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="/_sdk/element_sdk.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;body { box-sizing: border-box; }&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="/_sdk/data_sdk.js" type="text/javascript"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;/head&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="app-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">   </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;h1&gt;🗣️ Tongue Twister Trainer&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;p&gt;Practice speaking clearly&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="content-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="counter"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Challenge &lt;span id="twister-number"&gt;1&lt;/span&gt; of &lt;span id="total-twisters"&gt;5&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="twister-box" id="tongue-twister"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>She sells seashells by the seashore</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;&lt;button class="mic-button" id="record-btn"&gt;🎤&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="status-text" id="record-status"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Tap to start recording</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="results-section" id="results"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="results-label"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">       </span>What we heard</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="transcript-box" id="transcript"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="score-display"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="score-ring" id="score-ring" style="--score-percent: 0%"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="score-inner"&gt;&lt;span id="score-value"&gt;0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">       </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="feedback-text" id="feedback"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="button-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">       </span>&lt;button class="try-again-btn" id="try-again"&gt;Try Again&lt;/button&gt; &lt;button class="next-btn" id="next-btn"&gt;Next&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">   </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const tongueTwisters = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"She sells seashells by the seashore",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"Peter Piper picked a peck of pickled peppers",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"Red lorry yellow lorry",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"Unique New York unique New York",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"How much wood would a woodchuck chuck"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>let currentIndex = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let recognition = null;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let isRecording = false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let transcript = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const twisterText = document.getElementById("tongue-twister");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const numberText = document.getElementById("twister-number");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const totalText = document.getElementById("total-twisters");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const recordBtn = document.getElementById("record-btn");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const statusText = document.getElementById("record-status");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const resultBox = document.getElementById("results");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const transcriptBox = document.getElementById("transcript");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const scoreRing = document.getElementById("score-ring");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const scoreValue = document.getElementById("score-value");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const feedbackBox = document.getElementById("feedback");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>totalText.innerText = tongueTwisters.length;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function updateTwister() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>twisterText.innerText = tongueTwisters[currentIndex];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>numberText.innerText = currentIndex + 1;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>updateTwister();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function initRecognition() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!SpeechRecognition) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>statusText.innerText = "⚠️ Speech recognition not supported. Use Chrome, Edge, or Safari.";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition = new SpeechRecognition();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.continuous = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.interimResults = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.lang = "en-US";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.onresult = (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>transcript = e.results[e.results.length - 1][0].transcript;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>showResult();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.onerror = (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>console.error("Speech Recognition Error Details:", {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>error: e.error,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>timestamp: new Date().toISOString(),</p>
+<p class="p1"><span class="Apple-converted-space">          </span>userAgent: navigator.userAgent,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>protocol: window.location.protocol</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let errorMsg = `❌ Error: ${e.error}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (e.error === "not-allowed") {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Permission denied. Microphone access blocked.";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "no-speech") {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ No speech detected. Try speaking louder.";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "network") {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Network error. Check your connection.";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "service-not-allowed") {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Service not allowed in this context.";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>statusText.innerText = errorMsg;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>stopRecording();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>return true;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function startRecording() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!recognition) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>initRecognition().then(ok =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>if (ok) startRecording();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>isRecording = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recordBtn.classList.add("listening");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Listening...";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.start();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function stopRecording() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>isRecording = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recordBtn.classList.remove("listening");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>recognition.stop();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>recordBtn.addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!recognition) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ok = initRecognition();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!ok) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (isRecording) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>stopRecording();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>startRecording();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function calculateScore(original, spoken) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const o = original.toLowerCase().split(" ");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const s = spoken.toLowerCase().split(" ");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (s.length &lt; o.length * 0.6) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return 1;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>let match = 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>o.forEach(word =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (s.includes(word)) match++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>let accuracy = match / o.length;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let score = Math.round(accuracy * 10);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (score &lt; 1) score = 1;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (score &gt; 10) score = 10;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>return score;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function showResult() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const original = tongueTwisters[currentIndex];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const score = calculateScore(original, transcript);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>transcriptBox.innerText = transcript;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>scoreValue.innerText = score;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>scoreRing.style.setProperty("--score-percent", (score * 10) + "%");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>let feedback = "";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (score &gt;= 9) feedback = "🌟 Perfect pronunciation!";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if (score &gt;= 7) feedback = "👏 Very clear speech!";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if (score &gt;= 5) feedback = "👍 Good effort. Try again!";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else feedback = "💪 Slow down and pronounce each word clearly.";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedbackBox.innerText = feedback;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.add("show");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to record again";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("try-again").addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("show");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to start recording";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("next-btn").addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>currentIndex = (currentIndex + 1) % tongueTwisters.length;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateTwister();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("show");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to start recording";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space"> </span>&lt;script&gt;(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d7fc67804c9473c',t:'MTc3Mjc4MzQ4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&amp;&amp;(document.onreadystatechange=e,c())}}}})();&lt;/script&gt;&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
