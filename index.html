@@ -98,6 +98,35 @@
       gap: 16px;
     }
 
+    .twister-nav-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nav-btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .nav-btn:hover {
+      background: #e0e0e0;
+      transform: translateY(-2px);
+    }
+
+    .back-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .mic-button {
       width: 100px;
       height: 100px;
@@ -265,6 +294,9 @@
      <p>Practice speaking clearly</p>
     </div>
     <div class="content-section">
+     <div style="font-size: 14px; color: #333; font-weight: 700; text-align: center; margin-bottom: 16px;" id="teacher-tip">
+      Cakap Betul Betul, Bulat Bulat!
+     </div>
      <div class="counter">
       Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
      </div>
@@ -272,25 +304,28 @@
       <div class="twister-box" id="tongue-twister">
        She sells seashells by the seashore
       </div>
-      <div class="control-section"><button class="mic-button" id="record-btn">🎤</button>
+      <div class="twister-nav-buttons"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+      </div>
+      <div class="control-section">
+       <button class="mic-button" id="record-btn">🎤</button>
        <div class="status-text" id="record-status">
         Tap to start recording
        </div>
       </div>
       <div class="results-section" id="results">
        <div class="results-label">
-        What we heard
+        What Teacher Gilbert Heard
        </div>
        <div class="transcript-box" id="transcript"></div>
        <div class="score-display">
         <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-         <div class="score-inner"><span id="score-value">0</span>
+         <div class="score-inner">
+          <span id="score-value">0</span>
          </div>
         </div>
        </div>
        <div class="feedback-text" id="feedback"></div>
-       <div class="button-group">
-        <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+       <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
        </div>
       </div>
      </div>
@@ -304,6 +339,14 @@
       "Red lorry, yellow lorry, red lorry, yellow lorry, red lorry, yellow lorry",
       "Unique New York unique New York unique New York you need New York",
       "How much wood would a woodchuck chuck if a woodchuck could chuck wood, he would chuck as much wood as a woodchuck could chuck if a woodchuck could chuck wood"
+    ];
+
+    const teacherTips = [
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!"
     ];
 
     let currentIndex = 0;
@@ -327,6 +370,7 @@
     function updateTwister() {
       twisterText.innerText = tongueTwisters[currentIndex];
       numberText.innerText = currentIndex + 1;
+      document.getElementById("teacher-tip").innerText = teacherTips[currentIndex];
     }
 
     updateTwister();
@@ -406,30 +450,95 @@
       if (isRecording) {
         stopRecording();
       } else {
-        startRecording();
+        // If results are showing, reset them first
+        if (resultBox.classList.contains("show")) {
+          resultBox.classList.remove("show");
+          statusText.innerText = "Listening...";
+          recognition.start();
+          isRecording = true;
+          recordBtn.classList.add("listening");
+        } else {
+          startRecording();
+        }
       }
     });
 
     function calculateScore(original, spoken) {
-      const o = original.toLowerCase().split(" ");
-      const s = spoken.toLowerCase().split(" ");
+      const o = original.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+      const s = spoken.toLowerCase().split(/\s+/).filter(w => w.length > 0);
 
-      if (s.length < o.length * 0.6) {
-        return 1;
+      // Must capture at least 70% of words or get a low score
+      if (s.length < o.length * 0.7) {
+        return 3;
       }
 
-      let match = 0;
+      let exactMatches = 0;
+      let partialMatches = 0;
+      
+      // Check each original word
       o.forEach(word => {
-        if (s.includes(word)) match++;
+        const found = s.find(w => w === word);
+        if (found) {
+          exactMatches++;
+        } else {
+          // Give partial credit if word is at least 60% similar
+          const similarity = findSimilarity(word, s);
+          if (similarity >= 0.6) {
+            partialMatches += 0.5;
+          }
+        }
       });
 
-      let accuracy = match / o.length;
+      // Calculate score: exact matches weighted heavily, partials less
+      let accuracy = (exactMatches + partialMatches) / o.length;
       let score = Math.round(accuracy * 10);
 
+      // Cap at 10, minimum 1
       if (score < 1) score = 1;
       if (score > 10) score = 10;
 
       return score;
+    }
+
+    function findSimilarity(word, spokenWords) {
+      let maxSimilarity = 0;
+      spokenWords.forEach(spoken => {
+        const similarity = levenshteinSimilarity(word, spoken);
+        if (similarity > maxSimilarity) {
+          maxSimilarity = similarity;
+        }
+      });
+      return maxSimilarity;
+    }
+
+    function levenshteinSimilarity(a, b) {
+      const longer = a.length > b.length ? a : b;
+      const shorter = a.length > b.length ? b : a;
+      if (longer.length === 0) return 1;
+      
+      const editDistance = getEditDistance(longer, shorter);
+      return (longer.length - editDistance) / longer.length;
+    }
+
+    function getEditDistance(a, b) {
+      const costs = [];
+      for (let i = 0; i <= a.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= b.length; j++) {
+          if (i === 0) {
+            costs[j] = j;
+          } else if (j > 0) {
+            let newValue = costs[j - 1];
+            if (a.charAt(i - 1) !== b.charAt(j - 1)) {
+              newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+            }
+            costs[j - 1] = lastValue;
+            lastValue = newValue;
+          }
+        }
+        if (i > 0) costs[b.length] = lastValue;
+      }
+      return costs[b.length];
     }
 
     function showResult() {
@@ -456,12 +565,30 @@
       statusText.innerText = "Tap to start recording";
     });
 
-    document.getElementById("next-btn").addEventListener("click", () => {
+    const backBtn = document.getElementById("back-btn");
+    const nextTwisterBtn = document.getElementById("next-btn-twister");
+
+    backBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + tongueTwisters.length) % tongueTwisters.length;
+      updateTwister();
+      resultBox.classList.remove("show");
+      statusText.innerText = "Tap to start recording";
+      updateNavButtons();
+    });
+
+    nextTwisterBtn.addEventListener("click", () => {
       currentIndex = (currentIndex + 1) % tongueTwisters.length;
       updateTwister();
       resultBox.classList.remove("show");
       statusText.innerText = "Tap to start recording";
+      updateNavButtons();
     });
+
+    function updateNavButtons() {
+      backBtn.disabled = currentIndex === 0;
+    }
+
+    updateNavButtons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d81c9fea796c7bd',t:'MTc3MjgwNDYwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d81fc55a6582541',t:'MTc3MjgwNjY2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
