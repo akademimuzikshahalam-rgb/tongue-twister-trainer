@@ -62,14 +62,13 @@
 
     .content-section {
       padding: 40px 30px;
-      text-align: center;
     }
 
     .twister-box {
       background: #f8f9ff;
       padding: 24px;
       border-radius: 12px;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
       font-size: 18px;
       font-weight: 600;
       color: #333;
@@ -81,6 +80,7 @@
       font-size: 12px;
       color: #999;
       margin-bottom: 16px;
+      text-align: center;
     }
 
     .mic-button {
@@ -95,7 +95,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
+      margin: 0 auto 24px;
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative;
     }
@@ -125,31 +125,35 @@
       color: #666;
       font-size: 14px;
       height: 20px;
+      text-align: center;
+      margin-bottom: 24px;
     }
 
     .results-section {
-      display: none;
-      border-top: 1px solid #eee;
-      padding: 30px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.3s, max-height 0.3s;
     }
 
     .results-section.show {
-      display: block;
+      opacity: 1;
+      max-height: 500px;
     }
 
     .results-label {
       font-size: 12px;
       color: #999;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       font-weight: 600;
     }
 
     .transcript-box {
       background: #f8f9ff;
-      padding: 16px;
+      padding: 12px;
       border-radius: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       color: #333;
       font-style: italic;
       font-size: 14px;
@@ -158,12 +162,12 @@
     .score-display {
       display: flex;
       justify-content: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .score-ring {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: conic-gradient(#667eea var(--score-percent), #e0e0e0 var(--score-percent));
       display: flex;
@@ -173,14 +177,14 @@
     }
 
     .score-inner {
-      width: 88px;
-      height: 88px;
+      width: 72px;
+      height: 72px;
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
       color: #667eea;
     }
@@ -188,18 +192,19 @@
     .feedback-text {
       color: #666;
       font-size: 14px;
-      margin-bottom: 20px;
-      min-height: 24px;
+      margin-bottom: 16px;
+      min-height: 20px;
+      text-align: center;
     }
 
     .button-group {
       display: flex;
       gap: 12px;
+      justify-content: center;
     }
 
     .button-group button {
-      flex: 1;
-      padding: 12px 20px;
+      padding: 10px 20px;
       border: none;
       border-radius: 8px;
       font-size: 14px;
@@ -255,13 +260,13 @@
       <div class="transcript-box" id="transcript"></div>
       <div class="score-display">
        <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-        <div class="score-inner"><span id="score-value">0</span>
+        <div class="score-inner">
+         <span id="score-value">0</span>
         </div>
        </div>
       </div>
       <div class="feedback-text" id="feedback"></div>
-      <div class="button-group">
-       <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+      <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
       </div>
      </div>
     </div>
@@ -433,5 +438,5 @@
       statusText.innerText = "Tap to start recording";
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d7fc67804c9473c',t:'MTc3Mjc4MzQ4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d81b0cfc7d6c0c2',t:'MTc3MjgwMzU3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
