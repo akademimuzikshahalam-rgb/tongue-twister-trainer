@@ -64,18 +64,6 @@
       padding: 40px 30px;
     }
 
-    .twister-box {
-      background: #f8f9ff;
-      padding: 24px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-      line-height: 1.6;
-      border: 2px solid #e0e0e0;
-    }
-
     .counter {
       font-size: 12px;
       color: #999;
@@ -83,26 +71,52 @@
       text-align: center;
     }
 
+    .main-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .twister-box {
+      background: #f8f9ff;
+      padding: 24px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.6;
+      border: 2px solid #e0e0e0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .control-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
     .mic-button {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      width: 100px;
+      height: 100px;
+      background: #ef4444;
       border: none;
       border-radius: 50%;
       color: white;
-      font-size: 40px;
+      font-size: 50px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 24px;
       transition: transform 0.2s, box-shadow 0.2s;
       position: relative;
     }
 
     .mic-button:hover:not(.listening) {
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      transform: scale(1.08);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
     }
 
     .mic-button.listening {
@@ -111,63 +125,69 @@
 
     @keyframes pulse-button {
       0% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
       }
       50% {
-        box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);
+        box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
       }
     }
 
     .status-text {
       color: #666;
-      font-size: 14px;
-      height: 20px;
+      font-size: 16px;
+      font-weight: 500;
+      height: 24px;
       text-align: center;
-      margin-bottom: 24px;
+      min-width: 200px;
     }
 
     .results-section {
+      width: 100%;
       opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.3s, max-height 0.3s;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      margin-top: 16px;
+      padding-top: 24px;
+      border-top: 2px solid #e0e0e0;
     }
 
     .results-section.show {
       opacity: 1;
-      max-height: 500px;
+      pointer-events: auto;
     }
 
     .results-label {
       font-size: 12px;
       color: #999;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       font-weight: 600;
     }
 
     .transcript-box {
       background: #f8f9ff;
-      padding: 12px;
+      padding: 16px;
       border-radius: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       color: #333;
       font-style: italic;
       font-size: 14px;
+      min-height: 40px;
+      width: 100%;
     }
 
     .score-display {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .score-ring {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       background: conic-gradient(#667eea var(--score-percent), #e0e0e0 var(--score-percent));
       display: flex;
@@ -177,14 +197,14 @@
     }
 
     .score-inner {
-      width: 72px;
-      height: 72px;
+      width: 90px;
+      height: 90px;
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 32px;
       font-weight: 700;
       color: #667eea;
     }
@@ -192,7 +212,7 @@
     .feedback-text {
       color: #666;
       font-size: 14px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       min-height: 20px;
       text-align: center;
     }
@@ -201,10 +221,11 @@
       display: flex;
       gap: 12px;
       justify-content: center;
+      width: 100%;
     }
 
     .button-group button {
-      padding: 10px 20px;
+      padding: 10px 24px;
       border: none;
       border-radius: 8px;
       font-size: 14px;
@@ -247,26 +268,30 @@
      <div class="counter">
       Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
      </div>
-     <div class="twister-box" id="tongue-twister">
-      She sells seashells by the seashore
-     </div><button class="mic-button" id="record-btn">🎤</button>
-     <div class="status-text" id="record-status">
-      Tap to start recording
-     </div>
-     <div class="results-section" id="results">
-      <div class="results-label">
-       What we heard
+     <div class="main-layout">
+      <div class="twister-box" id="tongue-twister">
+       She sells seashells by the seashore
       </div>
-      <div class="transcript-box" id="transcript"></div>
-      <div class="score-display">
-       <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-        <div class="score-inner">
-         <span id="score-value">0</span>
-        </div>
+      <div class="control-section"><button class="mic-button" id="record-btn">🎤</button>
+       <div class="status-text" id="record-status">
+        Tap to start recording
        </div>
       </div>
-      <div class="feedback-text" id="feedback"></div>
-      <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+      <div class="results-section" id="results">
+       <div class="results-label">
+        What we heard
+       </div>
+       <div class="transcript-box" id="transcript"></div>
+       <div class="score-display">
+        <div class="score-ring" id="score-ring" style="--score-percent: 0%">
+         <div class="score-inner"><span id="score-value">0</span>
+         </div>
+        </div>
+       </div>
+       <div class="feedback-text" id="feedback"></div>
+       <div class="button-group">
+        <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+       </div>
       </div>
      </div>
     </div>
@@ -274,11 +299,11 @@
   </div>
   <script>
     const tongueTwisters = [
-      "She sells seashells by the seashore",
-      "Peter Piper picked a peck of pickled peppers",
-      "Red lorry yellow lorry",
-      "Unique New York unique New York",
-      "How much wood would a woodchuck chuck"
+      "She sells seashells by the seashore, and the shells she sells are seashells, I'm sure",
+      "Peter Piper picked a peck of pickled peppers, and if Peter Piper picked a peck of pickled peppers, where's the peck of pickled peppers Peter Piper picked",
+      "Red lorry, yellow lorry, red lorry, yellow lorry, red lorry, yellow lorry",
+      "Unique New York unique New York unique New York you need New York",
+      "How much wood would a woodchuck chuck if a woodchuck could chuck wood, he would chuck as much wood as a woodchuck could chuck if a woodchuck could chuck wood"
     ];
 
     let currentIndex = 0;
@@ -438,5 +463,5 @@
       statusText.innerText = "Tap to start recording";
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d81b0cfc7d6c0c2',t:'MTc3MjgwMzU3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d81c9fea796c7bd',t:'MTc3MjgwNDYwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
