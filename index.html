@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -43,7 +44,7 @@ background:#f8f9ff;
 width:70px;
 height:70px;
 border-radius:50%;
-background:#ef4444;
+background:#22c55e;
 color:white;
 font-size:30px;
 display:flex;
@@ -52,6 +53,18 @@ justify-content:center;
 margin:auto;
 margin-top:20px;
 cursor:pointer;
+transition:0.2s;
+}
+
+.mic.listening{
+background:#ef4444;
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(239,68,68,0.5)}
+70%{box-shadow:0 0 0 15px rgba(239,68,68,0)}
+100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}
 }
 
 .score{
@@ -145,11 +158,12 @@ function initRecognition(){
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition
 
 if(!SpeechRecognition){
-status.innerText="Speech recognition not supported"
+status.innerText="Speech recognition not supported in this browser"
 return
 }
 
 recognition=new SpeechRecognition()
+
 recognition.lang="en-US"
 recognition.continuous=false
 recognition.interimResults=false
@@ -161,6 +175,8 @@ const spoken=e.results[0][0].transcript
 const duration=(Date.now()-startTime)/1000
 
 showResult(spoken,duration)
+
+stopRecording()
 
 }
 
@@ -174,9 +190,19 @@ startTime=Date.now()
 
 isRecording=true
 
+recordBtn.classList.add("listening")
+
 status.innerText="Listening..."
 
 recognition.start()
+
+}
+
+function stopRecording(){
+
+isRecording=false
+
+recordBtn.classList.remove("listening")
 
 }
 
@@ -185,7 +211,7 @@ recordBtn.onclick=()=>{
 if(isRecording){
 
 recognition.stop()
-isRecording=false
+stopRecording()
 
 }else{
 
@@ -300,7 +326,7 @@ let feedback=""
 if(score>=9) feedback="🌟 Excellent pronunciation!"
 else if(score>=7) feedback="👏 Very clear speech"
 else if(score>=5) feedback="👍 Good effort — try again"
-else feedback="💪 Slow down and pronounce each word clearly"
+else feedback="💪 Slow down and pronounce clearly"
 
 feedbackBox.innerText=feedback
 
