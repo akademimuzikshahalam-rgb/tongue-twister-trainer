@@ -1,787 +1,771 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tongue Twister Trainer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      overflow-auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+    }
+
+    .header-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 16px;
+      text-align: center;
+    }
+
+    .header-section h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .header-section p {
+      margin: 2px 0 0 0;
+      opacity: 0.9;
+      font-size: 11px;
+    }
+
+    .content-section {
+      padding: 12px 16px;
+    }
+
+    .counter {
+      font-size: 10px;
+      color: #999;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .main-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .twister-box {
+      background: #f8f9ff;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.3;
+      border: 2px solid #e0e0e0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .control-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .twister-nav-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .nav-btn:hover {
+      background: #e0e0e0;
+      transform: translateY(-2px);
+    }
+
+    .back-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .mic-button {
+      width: 70px;
+      height: 70px;
+      background: #ef4444;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .mic-button:hover:not(.listening) {
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .mic-button.listening {
+      animation: pulse-button 1.5s infinite;
+    }
+
+    @keyframes pulse-button {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      }
+      50% {
+        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
+    }
+
+    .status-text {
+      color: #666;
+      font-size: 13px;
+      font-weight: 500;
+      height: 18px;
+      text-align: center;
+      min-width: 150px;
+    }
+
+    .results-section {
+      width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    .results-section.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .results-label {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .transcript-box {
+      background: #f8f9ff;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      color: #333;
+      font-style: italic;
+      font-size: 12px;
+      min-height: 30px;
+      width: 100%;
+    }
+
+    .score-display {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .score-ring {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: conic-gradient(#667eea var(--score-percent), #e0e0e0 var(--score-percent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .score-inner {
+      width: 62px;
+      height: 62px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    .feedback-text {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 10px;
+      min-height: 16px;
+      text-align: center;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .button-group button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .try-again-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .try-again-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .next-btn {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .next-btn:hover {
+      background: #e0e0e0;
+    }
+
+    #teacher-tip {
+      font-size: 12px;
+      color: #333;
+      font-weight: 700;
+      text-align: center;
+      margin: 0;
+    }
+
+    .logo-box {
+      height: 40px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-box img {
+      max-height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotateZ(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confetti-spin {
+      to {
+        transform: rotateZ(720deg);
+      }
+    }
+
+    .confetti-piece {
+      animation: confetti-fall 2s ease-in forwards;
+    }
+
+    .confetti-sparkle {
+      animation: confetti-spin 2s linear, confetti-fall 2s ease-in forwards;
+    }
+
+    @keyframes firework-burst {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    .firework {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+    }
   </style>
-</head>
-<body>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="en" class="h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space"> </span>&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Tongue Twister Trainer&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com/3.4.17"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;amp;family=Inter:wght@400;500&amp;amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Inter', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1, h2, h3 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Poppins', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>html, body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.app-wrapper {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow-auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 500px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header-section h1 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header-section p {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 2px 0 0 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0.9;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 11px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.content-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.counter {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #999;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.main-layout {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.twister-box {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f8f9ff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.3;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 2px solid #e0e0e0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.control-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.twister-nav-buttons {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.nav-btn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: all 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f0f0f0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.nav-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #e0e0e0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: translateY(-2px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.back-btn:disabled {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0.5;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: not-allowed;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.mic-button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 70px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 70px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #ef4444;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 35px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: transform 0.2s, box-shadow 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.mic-button:hover:not(.listening) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(1.08);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.mic-button.listening {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>animation: pulse-button 1.5s infinite;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes pulse-button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>0% {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>50% {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>100% {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.status-text {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #666;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-width: 150px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.results-section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: opacity 0.3s;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding-top: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-top: 2px solid #e0e0e0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.results-section.show {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events: auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.results-label {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #999;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.transcript-box {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f8f9ff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-style: italic;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-height: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.score-display {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.score-ring {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 70px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 70px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: conic-gradient(#667eea var(--score-percent), #e0e0e0 var(--score-percent));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.score-inner {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 62px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 62px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 22px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #667eea;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.feedback-text {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #666;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-height: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.button-group {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.button-group button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: all 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.try-again-btn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.try-again-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: translateY(-2px);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.next-btn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f0f0f0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.next-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #e0e0e0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#teacher-tip {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 700;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.logo-box {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>height: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.logo-box img {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-height: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>object-fit: contain;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.confetti {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position: fixed;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>z-index: 9999;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes confetti-fall {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>to {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>transform: translateY(100vh) rotateZ(360deg);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>opacity: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes confetti-spin {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>to {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>transform: rotateZ(720deg);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.confetti-piece {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>animation: confetti-fall 2s ease-in forwards;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.confetti-sparkle {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>animation: confetti-spin 2s linear, confetti-fall 2s ease-in forwards;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes firework-burst {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>0% {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>transform: scale(1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>opacity: 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>100% {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>transform: scale(0);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>opacity: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.firework {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position: fixed;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>z-index: 9998;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="/_sdk/element_sdk.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;body { box-sizing: border-box; }&lt;/style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="/_sdk/data_sdk.js" type="text/javascript"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space"> </span>&lt;/head&gt;</p>
-<p class="p1"><span class="Apple-converted-space"> </span>&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="app-wrapper"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">   </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="logo-box"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;h1&gt;Tongue Twister Trainer&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;p&gt;Practice speaking clearly&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="content-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="counter"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>Challenge &lt;span id="twister-number"&gt;1&lt;/span&gt; of &lt;span id="total-twisters"&gt;5&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;div class="main-layout"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="twister-box" id="tongue-twister"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>She sells seashells at the seashore, the shells she sells are surely seashells</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="teacher-tip"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>Cakap Betul Betul, Bulat Bulat!</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="twister-nav-buttons"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;button class="nav-btn back-btn" id="back-btn"&gt;← Back&lt;/button&gt; &lt;button class="nav-btn next-btn-twister" id="next-btn-twister"&gt;Next →&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="control-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;button class="mic-button" id="record-btn"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;&lt;path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /&gt; &lt;path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /&gt; &lt;path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /&gt; &lt;path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/svg&gt;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="status-text" id="record-status"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Tap to start recording</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="results-section" id="results"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="results-label"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>What Teacher Gilbert Heard</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="transcript-box" id="transcript"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="score-display"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="score-ring" id="score-ring" style="--score-percent: 0%"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">         </span>&lt;div class="score-inner"&gt;&lt;span id="score-value"&gt;0&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">         </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="feedback-text" id="feedback"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;div class="button-group"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="try-again-btn" id="try-again"&gt;Try Again&lt;/button&gt; &lt;button class="next-btn" id="next-btn"&gt;Next&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">       </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">     </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">   </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const tongueTwisters = [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"She sells seashells at the seashore, the shells she sells are surely seashells",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Peter Piper picked a peck of pickled peppers, a peck of pickled peppers Peter Piper picked",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Red lorry, yellow lorry, red lorry, yellow lorry, red lorry, yellow lorry",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Unique New York unique New York unique New York you need New York",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"How much wood would a woodchuck chuck if a woodchuck could chuck wood, he would chuck as much wood as a woodchuck could chuck if a woodchuck could chuck wood"</p>
-<p class="p1"><span class="Apple-converted-space">    </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const teacherTips = [</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Cakap Betul Betul, Bulat Bulat!",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Cakap Betul Betul, Bulat Bulat!",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Cakap Betul Betul, Bulat Bulat!",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Cakap Betul Betul, Bulat Bulat!",</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Cakap Betul Betul, Bulat Bulat!"</p>
-<p class="p1"><span class="Apple-converted-space">    </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let currentIndex = 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let recognition = null;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let isRecording = false;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let transcript = "";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const twisterText = document.getElementById("tongue-twister");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const numberText = document.getElementById("twister-number");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const totalText = document.getElementById("total-twisters");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const recordBtn = document.getElementById("record-btn");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const statusText = document.getElementById("record-status");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const resultBox = document.getElementById("results");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const transcriptBox = document.getElementById("transcript");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const scoreRing = document.getElementById("score-ring");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const scoreValue = document.getElementById("score-value");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const feedbackBox = document.getElementById("feedback");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>totalText.innerText = tongueTwisters.length;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function updateTwister() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>twisterText.innerText = tongueTwisters[currentIndex];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>numberText.innerText = currentIndex + 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("teacher-tip").innerText = teacherTips[currentIndex];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>updateTwister();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function initRecognition() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!SpeechRecognition) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>statusText.innerText = "⚠️ Speech recognition not supported. Use Chrome, Edge, or Safari.";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return false;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition = new SpeechRecognition();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.continuous = false;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.interimResults = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.lang = "en-US";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.onresult = (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>transcript = e.results[e.results.length - 1][0].transcript;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showResult();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.onerror = (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>console.error("Speech Recognition Error Details:", {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>error: e.error,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>timestamp: new Date().toISOString(),</p>
-<p class="p1"><span class="Apple-converted-space">          </span>userAgent: navigator.userAgent,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>protocol: window.location.protocol</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>let errorMsg = `❌ Error: ${e.error}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (e.error === "not-allowed") {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Permission denied. Microphone access blocked.";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "no-speech") {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ No speech detected. Try speaking louder.";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "network") {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Network error. Check your connection.";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else if (e.error === "service-not-allowed") {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>errorMsg = "❌ Service not allowed in this context.";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>statusText.innerText = errorMsg;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>stopRecording();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>return true;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function startRecording() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!recognition) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>initRecognition();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!recognition) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>isRecording = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recordBtn.classList.add("listening");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Listening...";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recognition.start();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function stopRecording() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>isRecording = false;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>recordBtn.classList.remove("listening");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (recognition) recognition.stop();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>recordBtn.addEventListener("click", () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!recognition) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ok = initRecognition();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!ok) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (isRecording) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>stopRecording();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (resultBox.classList.contains("show")) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>resultBox.classList.remove("show");</p>
-<p class="p1"><span class="Apple-converted-space">          </span>statusText.innerText = "Listening...";</p>
-<p class="p1"><span class="Apple-converted-space">          </span>recognition.start();</p>
-<p class="p1"><span class="Apple-converted-space">          </span>isRecording = true;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>recordBtn.classList.add("listening");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>startRecording();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function calculateScore(original, spoken) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const o = original.toLowerCase().split(/\s+/).filter(w =&gt; w.length &gt; 0);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const s = spoken.toLowerCase().split(/\s+/).filter(w =&gt; w.length &gt; 0);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (s.length &lt; o.length * 0.7) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return 3;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>let exactMatches = 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let partialMatches = 0;</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>o.forEach(word =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const found = s.find(w =&gt; w === word);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (found) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>exactMatches++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const similarity = findSimilarity(word, s);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (similarity &gt;= 0.6) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>partialMatches += 0.5;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>let accuracy = (exactMatches + partialMatches) / o.length;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let score = Math.round(accuracy * 10);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (score &lt; 1) score = 1;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (score &gt; 10) score = 10;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>return score;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function findSimilarity(word, spokenWords) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let maxSimilarity = 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>spokenWords.forEach(spoken =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const similarity = levenshteinSimilarity(word, spoken);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (similarity &gt; maxSimilarity) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>maxSimilarity = similarity;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return maxSimilarity;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function levenshteinSimilarity(a, b) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const longer = a.length &gt; b.length ? a : b;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const shorter = a.length &gt; b.length ? b : a;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (longer.length === 0) return 1;</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const editDistance = getEditDistance(longer, shorter);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return (longer.length - editDistance) / longer.length;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function getEditDistance(a, b) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const costs = [];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>for (let i = 0; i &lt;= a.length; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let lastValue = i;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>for (let j = 0; j &lt;= b.length; j++) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (i === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>costs[j] = j;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>} else if (j &gt; 0) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let newValue = costs[j - 1];</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (a.charAt(i - 1) !== b.charAt(j - 1)) {</p>
-<p class="p1"><span class="Apple-converted-space">              </span>newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>costs[j - 1] = lastValue;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>lastValue = newValue;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (i &gt; 0) costs[b.length] = lastValue;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return costs[b.length];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function showResult() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const original = tongueTwisters[currentIndex];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const score = calculateScore(original, transcript);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>transcriptBox.innerText = transcript;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>scoreValue.innerText = score;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>scoreRing.style.setProperty("--score-percent", (score * 10) + "%");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>let feedback = "";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (score &gt;= 9) feedback = "🌟 Perfect pronunciation!";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>else if (score &gt;= 7) feedback = "👏 Very clear speech!";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>else if (score &gt;= 5) feedback = "👍 Good effort. Try again!";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>else feedback = "💪 Slow down and pronounce each word clearly.";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>feedbackBox.innerText = feedback;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.add("show");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to record again";</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// Trigger celebration</p>
-<p class="p1"><span class="Apple-converted-space">      </span>celebrateScore(score);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("try-again").addEventListener("click", () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("show");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to start recording";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const backBtn = document.getElementById("back-btn");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const nextTwisterBtn = document.getElementById("next-btn-twister");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>backBtn.addEventListener("click", () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>currentIndex = (currentIndex - 1 + tongueTwisters.length) % tongueTwisters.length;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateTwister();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("show");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to start recording";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateNavButtons();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>nextTwisterBtn.addEventListener("click", () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>currentIndex = (currentIndex + 1) % tongueTwisters.length;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateTwister();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>resultBox.classList.remove("show");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>statusText.innerText = "Tap to start recording";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateNavButtons();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function updateNavButtons() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>backBtn.disabled = currentIndex === 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>updateNavButtons();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// ===== CELEBRATION FUNCTIONS =====</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function playSuccessSound() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const audioContext = new (window.AudioContext || window.webkitAudioContext)();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const notes = [523.25, 659.25, 783.99]; // C5, E5, G5</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>notes.forEach((freq, idx) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const osc = audioContext.createOscillator();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const gain = audioContext.createGain();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>osc.connect(gain);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gain.connect(audioContext.destination);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>osc.frequency.value = freq;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gain.gain.setValueAtTime(0.3, audioContext.currentTime);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>osc.start(audioContext.currentTime + idx * 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>osc.stop(audioContext.currentTime + idx * 0.1 + 0.3);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function createConfetti(count, colors) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const container = document.body;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>for (let i = 0; i &lt; count; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const piece = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.className = 'confetti confetti-piece';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.left = Math.random() * window.innerWidth + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.top = '-10px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.width = (Math.random() * 8 + 4) + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.height = (Math.random() * 8 + 4) + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.borderRadius = Math.random() &gt; 0.5 ? '50%' : '0';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.animationDuration = (Math.random() * 0.5 + 1.8) + 's';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>piece.style.animationDelay = (Math.random() * 0.3) + 's';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>container.appendChild(piece);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(() =&gt; piece.remove(), 2500);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function createFireworks(x, y) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const sparkCount = 30;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const colors = ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF', '#FF1493'];</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>for (let i = 0; i &lt; sparkCount; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const spark = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.className = 'firework';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.left = x + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.top = y + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.width = '6px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.height = '6px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.borderRadius = '50%';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spark.style.boxShadow = '0 0 6px ' + colors[Math.floor(Math.random() * colors.length)];</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const angle = (i / sparkCount) * Math.PI * 2;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const velocity = 5 + Math.random() * 5;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const vx = Math.cos(angle) * velocity;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const vy = Math.sin(angle) * velocity;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.body.appendChild(spark);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>let px = x, py = y, vx2 = vx, vy2 = vy;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const startTime = Date.now();</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const animate = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const elapsed = Date.now() - startTime;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (elapsed &gt; 1000) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>spark.remove();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p2"><span class="Apple-converted-space">          </span></p>
-<p class="p1"><span class="Apple-converted-space">          </span>px += vx2;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>py += vy2;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>vy2 += 0.2; // gravity</p>
-<p class="p2"><span class="Apple-converted-space">          </span></p>
-<p class="p1"><span class="Apple-converted-space">          </span>spark.style.left = px + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>spark.style.top = py + 'px';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>spark.style.opacity = 1 - (elapsed / 1000);</p>
-<p class="p2"><span class="Apple-converted-space">          </span></p>
-<p class="p1"><span class="Apple-converted-space">          </span>requestAnimationFrame(animate);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>animate();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function celebrateScore(score) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (score &gt;= 10) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Perfect 10 - maximum celebration</p>
-<p class="p1"><span class="Apple-converted-space">        </span>createConfetti(80, ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF']);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Multiple fireworks bursts</p>
-<p class="p1"><span class="Apple-converted-space">        </span>for (let i = 0; i &lt; 5; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const x = Math.random() * window.innerWidth;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const y = Math.random() * (window.innerHeight * 0.6) + 100;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>createFireworks(x, y);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}, i * 200);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>playSuccessSound();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else if (score &gt;= 9) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 9 marks - more confetti</p>
-<p class="p1"><span class="Apple-converted-space">        </span>createConfetti(50, ['#FFD700', '#FF69B4', '#00D9FF', '#90EE90']);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>createFireworks(window.innerWidth / 2, window.innerHeight / 3);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else if (score &gt;= 8) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 8 marks - moderate confetti</p>
-<p class="p1"><span class="Apple-converted-space">        </span>createConfetti(30, ['#667eea', '#764ba2', '#90EE90', '#FFD700']);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space"> </span>&lt;script&gt;(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da1fc959691c0c2',t:'MTc3MzE0MjIxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&amp;&amp;(document.onreadystatechange=e,c())}}}})();&lt;/script&gt;&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
-</body>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <div class="card">
+    <div class="header-section">
+     <div class="logo-box">
+      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     </div>
+     <h1>Tongue Twister Trainer</h1>
+     <p>Practice speaking clearly</p>
+    </div>
+    <div class="content-section">
+     <div class="counter">
+      Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
+     </div>
+     <div class="main-layout">
+      <div class="twister-box" id="tongue-twister">
+       She sells seashells at the seashore, the shells she sells are surely seashells
+      </div>
+      <div id="teacher-tip">
+       Cakap Betul Betul, Bulat Bulat!
+      </div>
+      <div class="twister-nav-buttons">
+       <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+      </div>
+      <div class="control-section">
+       <button class="mic-button" id="record-btn">
+        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg></button>
+       <div class="status-text" id="record-status">
+        Tap to start recording
+       </div>
+      </div>
+      <div class="results-section" id="results">
+       <div class="results-label">
+        What Teacher Gilbert Heard
+       </div>
+       <div class="transcript-box" id="transcript"></div>
+       <div class="score-display">
+        <div class="score-ring" id="score-ring" style="--score-percent: 0%">
+         <div class="score-inner"><span id="score-value">0</span>
+         </div>
+        </div>
+       </div>
+       <div class="feedback-text" id="feedback"></div>
+       <div class="button-group">
+        <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const tongueTwisters = [
+      "She sells seashells at the seashore, the shells she sells are surely seashells",
+      "Peter Piper picked a peck of pickled peppers, a peck of pickled peppers Peter Piper picked",
+      "Red lorry, yellow lorry, red lorry, yellow lorry, red lorry, yellow lorry",
+      "Unique New York unique New York unique New York you need New York",
+      "How much wood would a woodchuck chuck if a woodchuck could chuck wood, he would chuck as much wood as a woodchuck could chuck if a woodchuck could chuck wood"
+    ];
+
+    const teacherTips = [
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!",
+      "Cakap Betul Betul, Bulat Bulat!"
+    ];
+
+    let currentIndex = 0;
+    let recognition = null;
+    let isRecording = false;
+    let transcript = "";
+
+    const twisterText = document.getElementById("tongue-twister");
+    const numberText = document.getElementById("twister-number");
+    const totalText = document.getElementById("total-twisters");
+    const recordBtn = document.getElementById("record-btn");
+    const statusText = document.getElementById("record-status");
+    const resultBox = document.getElementById("results");
+    const transcriptBox = document.getElementById("transcript");
+    const scoreRing = document.getElementById("score-ring");
+    const scoreValue = document.getElementById("score-value");
+    const feedbackBox = document.getElementById("feedback");
+
+    totalText.innerText = tongueTwisters.length;
+
+    function updateTwister() {
+      twisterText.innerText = tongueTwisters[currentIndex];
+      numberText.innerText = currentIndex + 1;
+      document.getElementById("teacher-tip").innerText = teacherTips[currentIndex];
+    }
+
+    updateTwister();
+
+    function initRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        statusText.innerText = "⚠️ Speech recognition not supported. Use Chrome, Edge, or Safari.";
+        return false;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onresult = (e) => {
+        transcript = e.results[e.results.length - 1][0].transcript;
+        showResult();
+      };
+
+      recognition.onerror = (e) => {
+        console.error("Speech Recognition Error Details:", {
+          error: e.error,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent,
+          protocol: window.location.protocol
+        });
+        
+        let errorMsg = `❌ Error: ${e.error}`;
+        if (e.error === "not-allowed") {
+          errorMsg = "❌ Permission denied. Microphone access blocked.";
+        } else if (e.error === "no-speech") {
+          errorMsg = "❌ No speech detected. Try speaking louder.";
+        } else if (e.error === "network") {
+          errorMsg = "❌ Network error. Check your connection.";
+        } else if (e.error === "service-not-allowed") {
+          errorMsg = "❌ Service not allowed in this context.";
+        }
+        
+        statusText.innerText = errorMsg;
+        stopRecording();
+      };
+
+      return true;
+    }
+
+    function startRecording() {
+      if (!recognition) {
+        initRecognition();
+        if (!recognition) return;
+      }
+
+      isRecording = true;
+      recordBtn.classList.add("listening");
+      statusText.innerText = "Listening...";
+      recognition.start();
+    }
+
+    function stopRecording() {
+      isRecording = false;
+      recordBtn.classList.remove("listening");
+      if (recognition) recognition.stop();
+    }
+
+    recordBtn.addEventListener("click", () => {
+      if (!recognition) {
+        const ok = initRecognition();
+        if (!ok) {
+          return;
+        }
+      }
+
+      if (isRecording) {
+        stopRecording();
+      } else {
+        if (resultBox.classList.contains("show")) {
+          resultBox.classList.remove("show");
+          statusText.innerText = "Listening...";
+          recognition.start();
+          isRecording = true;
+          recordBtn.classList.add("listening");
+        } else {
+          startRecording();
+        }
+      }
+    });
+
+    function calculateScore(original, spoken) {
+      const o = original.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+      const s = spoken.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+
+      if (s.length < o.length * 0.7) {
+        return 3;
+      }
+
+      let exactMatches = 0;
+      let partialMatches = 0;
+      
+      o.forEach(word => {
+        const found = s.find(w => w === word);
+        if (found) {
+          exactMatches++;
+        } else {
+          const similarity = findSimilarity(word, s);
+          if (similarity >= 0.6) {
+            partialMatches += 0.5;
+          }
+        }
+      });
+
+      let accuracy = (exactMatches + partialMatches) / o.length;
+      let score = Math.round(accuracy * 10);
+
+      if (score < 1) score = 1;
+      if (score > 10) score = 10;
+
+      return score;
+    }
+
+    function findSimilarity(word, spokenWords) {
+      let maxSimilarity = 0;
+      spokenWords.forEach(spoken => {
+        const similarity = levenshteinSimilarity(word, spoken);
+        if (similarity > maxSimilarity) {
+          maxSimilarity = similarity;
+        }
+      });
+      return maxSimilarity;
+    }
+
+    function levenshteinSimilarity(a, b) {
+      const longer = a.length > b.length ? a : b;
+      const shorter = a.length > b.length ? b : a;
+      if (longer.length === 0) return 1;
+      
+      const editDistance = getEditDistance(longer, shorter);
+      return (longer.length - editDistance) / longer.length;
+    }
+
+    function getEditDistance(a, b) {
+      const costs = [];
+      for (let i = 0; i <= a.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= b.length; j++) {
+          if (i === 0) {
+            costs[j] = j;
+          } else if (j > 0) {
+            let newValue = costs[j - 1];
+            if (a.charAt(i - 1) !== b.charAt(j - 1)) {
+              newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+            }
+            costs[j - 1] = lastValue;
+            lastValue = newValue;
+          }
+        }
+        if (i > 0) costs[b.length] = lastValue;
+      }
+      return costs[b.length];
+    }
+
+    function showResult() {
+      const original = tongueTwisters[currentIndex];
+      const score = calculateScore(original, transcript);
+
+      transcriptBox.innerText = transcript;
+      scoreValue.innerText = score;
+      scoreRing.style.setProperty("--score-percent", (score * 10) + "%");
+
+      let feedback = "";
+      if (score >= 9) feedback = "🌟 Perfect pronunciation!";
+      else if (score >= 7) feedback = "👏 Very clear speech!";
+      else if (score >= 5) feedback = "👍 Good effort. Try again!";
+      else feedback = "💪 Slow down and pronounce each word clearly.";
+
+      feedbackBox.innerText = feedback;
+      resultBox.classList.add("show");
+      statusText.innerText = "Tap to record again";
+      
+      // Trigger celebration
+      celebrateScore(score);
+    }
+
+    document.getElementById("try-again").addEventListener("click", () => {
+      resultBox.classList.remove("show");
+      statusText.innerText = "Tap to start recording";
+    });
+
+    const backBtn = document.getElementById("back-btn");
+    const nextTwisterBtn = document.getElementById("next-btn-twister");
+
+    backBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + tongueTwisters.length) % tongueTwisters.length;
+      updateTwister();
+      resultBox.classList.remove("show");
+      statusText.innerText = "Tap to start recording";
+      updateNavButtons();
+    });
+
+    nextTwisterBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % tongueTwisters.length;
+      updateTwister();
+      resultBox.classList.remove("show");
+      statusText.innerText = "Tap to start recording";
+      updateNavButtons();
+    });
+
+    function updateNavButtons() {
+      backBtn.disabled = currentIndex === 0;
+    }
+
+    updateNavButtons();
+
+    // ===== CELEBRATION FUNCTIONS =====
+    function playSuccessSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+      
+      notes.forEach((freq, idx) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        
+        osc.start(audioContext.currentTime + idx * 0.1);
+        osc.stop(audioContext.currentTime + idx * 0.1 + 0.3);
+      });
+    }
+
+    function createConfetti(count, colors) {
+      const container = document.body;
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti confetti-piece';
+        piece.style.left = Math.random() * window.innerWidth + 'px';
+        piece.style.top = '-10px';
+        piece.style.width = (Math.random() * 8 + 4) + 'px';
+        piece.style.height = (Math.random() * 8 + 4) + 'px';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        piece.style.animationDuration = (Math.random() * 0.5 + 1.8) + 's';
+        piece.style.animationDelay = (Math.random() * 0.3) + 's';
+        container.appendChild(piece);
+        
+        setTimeout(() => piece.remove(), 2500);
+      }
+    }
+
+    function createFireworks(x, y) {
+      const sparkCount = 30;
+      const colors = ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF', '#FF1493'];
+      
+      for (let i = 0; i < sparkCount; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'firework';
+        spark.style.left = x + 'px';
+        spark.style.top = y + 'px';
+        spark.style.width = '6px';
+        spark.style.height = '6px';
+        spark.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        spark.style.borderRadius = '50%';
+        spark.style.boxShadow = '0 0 6px ' + colors[Math.floor(Math.random() * colors.length)];
+        
+        const angle = (i / sparkCount) * Math.PI * 2;
+        const velocity = 5 + Math.random() * 5;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        document.body.appendChild(spark);
+        
+        let px = x, py = y, vx2 = vx, vy2 = vy;
+        const startTime = Date.now();
+        
+        const animate = () => {
+          const elapsed = Date.now() - startTime;
+          if (elapsed > 1000) {
+            spark.remove();
+            return;
+          }
+          
+          px += vx2;
+          py += vy2;
+          vy2 += 0.2; // gravity
+          
+          spark.style.left = px + 'px';
+          spark.style.top = py + 'px';
+          spark.style.opacity = 1 - (elapsed / 1000);
+          
+          requestAnimationFrame(animate);
+        };
+        animate();
+      }
+    }
+
+    function celebrateScore(score) {
+      if (score >= 10) {
+        // Perfect 10 - maximum celebration
+        createConfetti(80, ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF']);
+        
+        // Multiple fireworks bursts
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * (window.innerHeight * 0.6) + 100;
+            createFireworks(x, y);
+          }, i * 200);
+        }
+        
+        playSuccessSound();
+      } else if (score >= 9) {
+        // 9 marks - more confetti
+        createConfetti(50, ['#FFD700', '#FF69B4', '#00D9FF', '#90EE90']);
+        createFireworks(window.innerWidth / 2, window.innerHeight / 3);
+      } else if (score >= 8) {
+        // 8 marks - moderate confetti
+        createConfetti(30, ['#667eea', '#764ba2', '#90EE90', '#FFD700']);
+      }
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da1fc959691c0c2',t:'MTc3MzE0MjIxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
