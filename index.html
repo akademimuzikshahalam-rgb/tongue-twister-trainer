@@ -83,7 +83,7 @@
       background: #f8f9ff;
       padding: 10px;
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 24px;
       font-weight: 600;
       color: #333;
       line-height: 1.3;
@@ -204,6 +204,7 @@
       text-transform: uppercase;
       margin-bottom: 6px;
       font-weight: 600;
+      text-align: center;
     }
 
     .transcript-box {
@@ -366,8 +367,7 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section">
-     <div class="logo-box">
-      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -383,13 +383,15 @@
       <div id="teacher-tip">
        Cakap Betul Betul, Bulat Bulat!
       </div>
-      <div class="twister-nav-buttons">
-       <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+      <div class="twister-nav-buttons"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
       </div>
       <div class="control-section">
-       <button class="mic-button" id="record-btn">
-        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg></button>
+       <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+        <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;"> <button class="mic-button" id="record-btn">
+         <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+         </svg></button> <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;">
+       </div>
        <div class="status-text" id="record-status">
         Tap to start recording
        </div>
@@ -405,14 +407,14 @@
           Your Score
          </div>
          <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-          <div class="score-inner"><span id="score-value">0</span>
+          <div class="score-inner">
+           <span id="score-value">0</span>
           </div>
          </div>
         </div>
        </div>
        <div class="feedback-text" id="feedback"></div>
-       <div class="button-group">
-        <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+       <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
        </div>
       </div>
      </div>
@@ -699,6 +701,55 @@
       });
     }
 
+    function playConfettiSound() {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // Upward sweeping whistle sound
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.4);
+        
+        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        
+        osc.start(audioContext.currentTime);
+        osc.stop(audioContext.currentTime + 0.4);
+      } catch (e) {
+        console.log('Audio context not available');
+      }
+    }
+
+    function playApplauseSound() {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // Create a clapping/applause effect with multiple quick bursts
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            
+            osc.type = 'square';
+            osc.frequency.value = 150 + Math.random() * 100;
+            
+            gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + 0.1);
+          }, i * 150);
+        }
+      } catch (e) {
+        console.log('Audio context not available');
+      }
+    }
+
     function createConfetti(count, colors) {
       const container = document.body;
       for (let i = 0; i < count; i++) {
@@ -766,8 +817,12 @@
 
     function celebrateScore(score) {
       if (score >= 10) {
-        // Perfect 10 - maximum celebration
-        createConfetti(80, ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF']);
+        // Perfect 10 - maximum celebration with applause
+        playApplauseSound();
+        
+        setTimeout(() => {
+          createConfetti(80, ['#FFD700', '#FFA500', '#FF69B4', '#00D9FF']);
+        }, 200);
         
         // Multiple fireworks bursts
         for (let i = 0; i < 5; i++) {
@@ -775,19 +830,30 @@
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * (window.innerHeight * 0.6) + 100;
             createFireworks(x, y);
-          }, i * 200);
+          }, i * 200 + 300);
         }
         
         playSuccessSound();
       } else if (score >= 9) {
-        // 9 marks - more confetti
-        createConfetti(50, ['#FFD700', '#FF69B4', '#00D9FF', '#90EE90']);
-        createFireworks(window.innerWidth / 2, window.innerHeight / 3);
+        // 9 marks - more confetti with longer duration
+        playConfettiSound();
+        
+        setTimeout(() => {
+          createConfetti(50, ['#FFD700', '#FF69B4', '#00D9FF', '#90EE90']);
+        }, 100);
+        
+        setTimeout(() => {
+          createFireworks(window.innerWidth / 2, window.innerHeight / 3);
+        }, 500);
       } else if (score >= 8) {
-        // 8 marks - moderate confetti
-        createConfetti(30, ['#667eea', '#764ba2', '#90EE90', '#FFD700']);
+        // 8 marks - moderate confetti with shorter duration
+        playConfettiSound();
+        
+        setTimeout(() => {
+          createConfetti(30, ['#667eea', '#764ba2', '#90EE90', '#FFD700']);
+        }, 100);
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da9194416542541',t:'MTc3MzIxNjc5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da920fc32402541',t:'MTc3MzIxNzExMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
