@@ -67,7 +67,7 @@
 
     .counter {
       font-size: 10px;
-      color: #999;
+      color: #4b5563;
       margin-bottom: 6px;
       text-align: center;
     }
@@ -181,22 +181,26 @@
 
     .results-section {
       width: 100%;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
       margin-top: 8px;
       padding-top: 12px;
       border-top: 2px solid #e0e0e0;
     }
 
-    .results-section.show {
-      opacity: 1;
-      pointer-events: auto;
+    .results-section.show .score-display,
+    .results-section.show .feedback-text,
+    .results-section.show .button-group {
+      display: flex;
+    }
+
+    .score-display,
+    .feedback-text,
+    .button-group {
+      display: none;
     }
 
     .results-label {
       font-size: 10px;
-      color: #999;
+      color: #4b5563;
       text-transform: uppercase;
       margin-bottom: 6px;
       font-weight: 600;
@@ -362,7 +366,8 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section">
-     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box">
+      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -378,11 +383,12 @@
       <div id="teacher-tip">
        Cakap Betul Betul, Bulat Bulat!
       </div>
-      <div class="twister-nav-buttons"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+      <div class="twister-nav-buttons">
+       <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
       </div>
-      <div class="control-section"><button class="mic-button" id="record-btn">
-        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <div class="control-section">
+       <button class="mic-button" id="record-btn">
+        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg></button>
        <div class="status-text" id="record-status">
         Tap to start recording
@@ -394,14 +400,19 @@
        </div>
        <div class="transcript-box" id="transcript"></div>
        <div class="score-display">
-        <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-         <div class="score-inner">
-          <span id="score-value">0</span>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+         <div style="font-size: 10px; color: #4b5563; text-transform: uppercase; font-weight: 600;">
+          Your Score
+         </div>
+         <div class="score-ring" id="score-ring" style="--score-percent: 0%">
+          <div class="score-inner"><span id="score-value">0</span>
+          </div>
          </div>
         </div>
        </div>
        <div class="feedback-text" id="feedback"></div>
-       <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+       <div class="button-group">
+        <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
        </div>
       </div>
      </div>
@@ -649,6 +660,7 @@
       updateTwister();
       resultBox.classList.remove("show");
       statusText.innerText = "Tap to start recording";
+      recordBtn.classList.remove("listening");
       updateNavButtons();
     });
 
@@ -657,6 +669,7 @@
       updateTwister();
       resultBox.classList.remove("show");
       statusText.innerText = "Tap to start recording";
+      recordBtn.classList.remove("listening");
       updateNavButtons();
     });
 
@@ -776,5 +789,5 @@
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da2701af6d7d964',t:'MTc3MzE0Njk1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9da9194416542541',t:'MTc3MzIxNjc5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
