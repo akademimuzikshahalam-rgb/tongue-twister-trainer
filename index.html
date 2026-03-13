@@ -426,7 +426,8 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section" style="position: relative;">
-     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box">
+      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -436,7 +437,8 @@
       <div style="font-size: 12px; color: #4b5563; text-transform: uppercase; font-weight: 600;">
        Choose Difficulty
       </div>
-      <div style="display: flex; gap: 8px;"><button class="difficulty-btn difficulty-btn-easy" data-difficulty="easy" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Easy </button> <button class="difficulty-btn difficulty-btn-medium" data-difficulty="medium" style="background: #f59e0b; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Medium </button> <button class="difficulty-btn difficulty-btn-hard" data-difficulty="hard" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Hard </button>
+      <div style="display: flex; gap: 8px;">
+       <button class="difficulty-btn difficulty-btn-easy" data-difficulty="easy" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Easy </button> <button class="difficulty-btn difficulty-btn-medium" data-difficulty="medium" style="background: #f59e0b; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Medium </button> <button class="difficulty-btn difficulty-btn-hard" data-difficulty="hard" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Hard </button>
       </div>
      </div>
      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px;">
@@ -452,13 +454,12 @@
      <div id="teacher-tip">
       Cakap Betul Betul, Bulat Bulat!
      </div>
-     <div class="twister-nav-buttons"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+     <div class="twister-nav-buttons">
+      <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
      </div>
      <div class="control-section">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
-       <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;"> <button class="mic-button" id="record-btn">
-        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-         <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;"> <button class="mic-button" id="record-btn">
+        <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg></button> <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;">
       </div>
       <div class="status-text" id="record-status">
@@ -477,14 +478,14 @@
          Your Score
         </div>
         <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-         <div class="score-inner">
-          <span id="score-value">0</span>
+         <div class="score-inner"><span id="score-value">0</span>
          </div>
         </div>
        </div>
       </div>
       <div class="feedback-text" id="feedback"></div>
-      <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+      <div class="button-group">
+       <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
       </div>
      </div>
     </div>
@@ -599,7 +600,7 @@
       const twisters = tongueTwistersByDifficulty[currentDifficulty];
       twisterText.innerText = twisters[currentIndex];
       numberText.innerText = currentIndex + 1;
-      document.getElementById("teacher-tip").innerText = "Cakap Betul Betul, Bulat Bulat!";
+      document.getElementById("teacher-tip").innerText = "Cakap dengan jelas dan terang!";
     }
 
     function initRecognition() {
@@ -613,7 +614,7 @@
       recognition = new SpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
-      recognition.lang = "en-US";
+      recognition.lang = "en-GB";
 
       let silenceTimeout;
       const SILENCE_THRESHOLD = 1000; // 1 second of silence to end recording
@@ -804,9 +805,9 @@
       scoreRing.style.setProperty("--score-percent", (score * 10) + "%");
 
       let feedback = "";
-      if (score >= 9) feedback = "🌟 Perfect pronunciation!";
+      if (score >= 9) feedback = "🌟 Excellent pronunciation!";
       else if (score >= 7) feedback = "👏 Very clear speech!";
-      else if (score >= 5) feedback = "👍 Good effort. Try again!";
+      else if (score >= 5) feedback = "👍 Good effort. Have another go!";
       else feedback = "💪 Slow down and pronounce each word clearly.";
 
       feedbackBox.innerText = feedback;
@@ -1132,5 +1133,5 @@
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb3a0f5184a319',t:'MTc3MzQwNjg4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb3e96843da319',t:'MTc3MzQwNzA2Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
