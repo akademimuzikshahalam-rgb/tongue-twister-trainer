@@ -425,7 +425,7 @@
  <body>
   <div class="app-wrapper">
    <div class="card">
-    <div class="header-section">
+    <div class="header-section" style="position: relative;">
      <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
@@ -438,7 +438,12 @@
       </div>
       <div style="display: flex; gap: 8px;"><button class="difficulty-btn difficulty-btn-easy" data-difficulty="easy" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Easy </button> <button class="difficulty-btn difficulty-btn-medium" data-difficulty="medium" style="background: #f59e0b; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Medium </button> <button class="difficulty-btn difficulty-btn-hard" data-difficulty="hard" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Hard </button>
       </div>
-     </div> Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
+     </div>
+     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px;">
+      <div style="font-size: 12px; color: #4b5563;">
+       Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
+      </div><button id="home-btn" style="background: none; border: none; cursor: pointer; display: none; align-items: center; gap: 6px; color: #4b5563; font-size: 12px; font-weight: 600; transition: all 0.2s; padding: 4px 8px;">🏠 Home</button>
+     </div>
     </div>
     <div class="main-layout">
      <div class="twister-box" id="tongue-twister">
@@ -543,12 +548,44 @@
       difficultySelector.style.display = "none";
       mainLayout.style.display = "flex";
       
+      // Show home button
+      document.getElementById("home-btn").style.display = "flex";
+      
       const twisters = tongueTwistersByDifficulty[difficulty];
       totalText.innerText = twisters.length;
       
       updateTwister();
       updateNavButtons();
     }
+
+    // Home button click handler
+    document.getElementById("home-btn").addEventListener("click", () => {
+      currentDifficulty = null;
+      currentIndex = 0;
+      
+      // Reset body background
+      document.body.className = "";
+      
+      // Show difficulty selector and hide main layout
+      difficultySelector.style.display = "flex";
+      mainLayout.style.display = "none";
+      
+      // Hide home button
+      document.getElementById("home-btn").style.display = "none";
+      
+      // Clear results
+      resultBox.classList.remove("show");
+      document.getElementById("live-transcript").style.display = "none";
+      document.getElementById("live-transcript").innerText = "";
+      statusText.innerText = "Tap to start recording";
+      recordBtn.classList.remove("listening");
+      
+      // Stop any recording
+      if (isRecording && recognition) {
+        recognition.stop();
+        isRecording = false;
+      }
+    });
 
     // Add event listeners to difficulty buttons
     document.querySelectorAll(".difficulty-btn").forEach(btn => {
@@ -1095,5 +1132,5 @@
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb2d5682268066',t:'MTc3MzQwNjM2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb3a0f5184a319',t:'MTc3MzQwNjg4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
