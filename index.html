@@ -67,8 +67,7 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section">
-     <div class="logo-box">
-      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -83,7 +82,8 @@
         Created By Teacher Gilbert
        </div>
       </div>
-      <div style="display:flex;gap:8px;"><button class="difficulty-btn" data-difficulty="easy" style="background:#10b981;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Easy </button> <button class="difficulty-btn" data-difficulty="medium" style="background:#f59e0b;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Medium </button> <button class="difficulty-btn" data-difficulty="hard" style="background:#ef4444;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Hard </button>
+      <div style="display:flex;gap:8px;">
+       <button class="difficulty-btn" data-difficulty="easy" style="background:#10b981;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Easy </button> <button class="difficulty-btn" data-difficulty="medium" style="background:#f59e0b;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Medium </button> <button class="difficulty-btn" data-difficulty="hard" style="background:#ef4444;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Hard </button>
       </div>
      </div>
      <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:12px;">
@@ -102,13 +102,16 @@
        <div id="teacher-tip" style="text-align:center;margin-top:6px;font-weight:700;color:#333;">
         Cakap betul betul, bulat bulat!
        </div>
-       <div class="twister-nav-buttons" style="margin-top:10px;"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+       <div class="twister-nav-buttons" style="margin-top:10px;">
+        <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
        </div>
        <div class="control-section" style="margin-top:12px;">
         <div class="mic-row">
-         <div style="display:flex;align-items:center;gap:8px;"><img src="https://i.imgur.com/dm9RVTU.png" alt="logo" style="height:48px;">
+         <div style="display:flex;align-items:center;gap:8px;">
+          <img src="https://i.imgur.com/dm9RVTU.png" alt="logo" style="height:48px;">
          </div><button class="mic-button" id="record-btn" title="Tap to record">
-          <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+           <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg></button>
          <div class="side-score" id="side-score-display" style="display:flex;">
           <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
@@ -116,8 +119,7 @@
             Score
            </div>
            <div class="score-ring" id="side-score-ring" style="--score-percent:0%;width:100px;height:100px;">
-            <div class="score-inner" style="width:88px;height:88px;font-size:28px;">
-             <span id="side-score-value">0</span>
+            <div class="score-inner" style="width:88px;height:88px;font-size:28px;"><span id="side-score-value">0</span>
             </div>
            </div>
           </div>
@@ -133,7 +135,8 @@
          </div>
          <div class="transcript-box" id="transcript"></div>
          <div class="feedback-text" id="feedback"></div>
-         <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+         <div class="button-group">
+          <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
          </div>
         </div>
        </div>
@@ -288,31 +291,37 @@
     function calculateScore(original, spoken) {
       const o = original.toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
       const s = spoken.toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
-      if (s.length < o.length * 0.8) return 3;
-      let exactMatches = 0, partialMatches = 0;
+      
+      // Must speak at least 80% of the words
+      if (s.length < o.length * 0.8) return 1;
+      
+      // Strict matching: count exact word matches only
+      let exactMatches = 0;
+      const usedSpokenIndices = new Set();
+      
       o.forEach(word => {
-        const found = s.find(w => w === word);
-        if (found) exactMatches++;
-        else {
-          const sim = findSimilarity(word, s);
-          if (sim >= 0.75) partialMatches += 0.3;
+        for (let i = 0; i < s.length; i++) {
+          if (usedSpokenIndices.has(i)) continue;
+          const sim = levenshteinSimilarity(word, s[i]);
+          // Require 85% similarity for a match (strict threshold)
+          if (sim >= 0.85) {
+            exactMatches++;
+            usedSpokenIndices.add(i);
+            break;
+          }
         }
       });
-      let accuracy = (exactMatches + partialMatches) / o.length;
+      
+      // Calculate accuracy - must match majority of words
+      let accuracy = exactMatches / o.length;
+      
+      // Minimum 70% accuracy to get any points
+      if (accuracy < 0.70) return 1;
+      
       let score = Math.round(accuracy * 10);
-      if (score === 10 && accuracy < 0.99) score = 9;
       if (score < 1) score = 1;
       if (score > 10) score = 10;
       return score;
-    }
-
-    function findSimilarity(word, spokenWords) {
-      let max = 0;
-      spokenWords.forEach(s => {
-        const sim = levenshteinSimilarity(word, s);
-        if (sim > max) max = sim;
-      });
-      return max;
     }
 
     function levenshteinSimilarity(a,b) {
@@ -509,5 +518,5 @@
     }
   </script>
   </div>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb8dd077b23a5f',t:'MTc3MzQxMDMxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb9264c6c93a5f',t:'MTc3MzQxMDQ5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
