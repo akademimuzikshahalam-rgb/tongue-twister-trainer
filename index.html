@@ -426,8 +426,7 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section" style="position: relative;">
-     <div class="logo-box">
-      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -442,8 +441,7 @@
         Created By Teacher Gilbert
        </div>
       </div>
-      <div style="display: flex; gap: 8px;">
-       <button class="difficulty-btn difficulty-btn-easy" data-difficulty="easy" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Easy </button> <button class="difficulty-btn difficulty-btn-medium" data-difficulty="medium" style="background: #f59e0b; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Medium </button> <button class="difficulty-btn difficulty-btn-hard" data-difficulty="hard" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Hard </button>
+      <div style="display: flex; gap: 8px;"><button class="difficulty-btn difficulty-btn-easy" data-difficulty="easy" style="background: #10b981; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Easy </button> <button class="difficulty-btn difficulty-btn-medium" data-difficulty="medium" style="background: #f59e0b; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Medium </button> <button class="difficulty-btn difficulty-btn-hard" data-difficulty="hard" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;"> Hard </button>
       </div>
      </div>
      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px;">
@@ -460,15 +458,16 @@
       She sells seashells at the seashore, the shells she sells are surely seashells
      </div>
      <div id="teacher-tip">
-      Cakap Betul Betul, Bulat Bulat!
+      Cakap betul betul, bulat bulat!
      </div>
-     <div class="twister-nav-buttons">
-      <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+     <div class="twister-nav-buttons"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
      </div>
      <div class="control-section">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
-       <div style="display: flex; align-items: center; gap: 12px;"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;"> <button class="mic-button" id="record-btn">
-         <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+       <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy" style="height: 30px; width: auto; object-fit: contain;"> <button class="mic-button" id="record-btn">
+         <svg width="40" height="40" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
          </svg></button>
        </div>
        <div class="score-display" id="side-score-display" style="display: none; align-items: center; gap: 6px; justify-content: flex-end;">
@@ -477,7 +476,8 @@
           Your Score
          </div>
          <div class="score-ring" id="side-score-ring" style="--score-percent: 0%">
-          <div class="score-inner"><span id="side-score-value">0</span>
+          <div class="score-inner">
+           <span id="side-score-value">0</span>
           </div>
          </div>
         </div>
@@ -499,20 +499,20 @@
          Your Score
         </div>
         <div class="score-ring" id="score-ring" style="--score-percent: 0%">
-         <div class="score-inner"><span id="score-value">0</span>
+         <div class="score-inner">
+          <span id="score-value">0</span>
          </div>
         </div>
        </div>
       </div>
       <div class="feedback-text" id="feedback"></div>
-      <div class="button-group">
-       <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
+      <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn">Next</button>
       </div>
      </div>
     </div>
    </div>
   </div>
-  <footer style="text-align: center; padding: 12px; font-size: 11px; color: #999; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.8);">
+  <footer style="text-align: center; padding: 12px; font-size: 11px; font-weight: 700; color: #999; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); background-image: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%); width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.8); display: flex; align-items: center; justify-content: center;">
    Created By Teacher Gilbert
   </footer>
   <script>
@@ -1166,5 +1166,5 @@
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb5a45c5923a5f',t:'MTc3MzQwODIwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dbb704a640b3a5f',t:'MTc3MzQwOTEwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
