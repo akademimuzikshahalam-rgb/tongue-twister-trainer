@@ -67,7 +67,8 @@
   <div class="app-wrapper">
    <div class="card">
     <div class="header-section">
-     <div class="logo-box"><img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
+     <div class="logo-box">
+      <img src="https://i.imgur.com/dm9RVTU.png" alt="Speak Up logo" loading="lazy">
      </div>
      <h1>Tongue Twister Trainer</h1>
      <p>Practice speaking clearly</p>
@@ -82,8 +83,7 @@
         Created By Teacher Gilbert
        </div>
       </div>
-      <div style="display:flex;gap:8px;">
-       <button class="difficulty-btn" data-difficulty="easy" style="background:#10b981;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Easy </button> <button class="difficulty-btn" data-difficulty="medium" style="background:#f59e0b;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Medium </button> <button class="difficulty-btn" data-difficulty="hard" style="background:#ef4444;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Hard </button>
+      <div style="display:flex;gap:8px;"><button class="difficulty-btn" data-difficulty="easy" style="background:#10b981;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Easy </button> <button class="difficulty-btn" data-difficulty="medium" style="background:#f59e0b;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Medium </button> <button class="difficulty-btn" data-difficulty="hard" style="background:#ef4444;color:white;padding:8px 16px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;"> Hard </button>
       </div>
      </div>
      <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:12px;">
@@ -102,16 +102,13 @@
        <div id="teacher-tip" style="text-align:center;margin-top:6px;font-weight:700;color:#333;">
         Cakap betul betul, bulat bulat!
        </div>
-       <div class="twister-nav-buttons" style="margin-top:10px;">
-        <button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
+       <div class="twister-nav-buttons" style="margin-top:10px;"><button class="nav-btn back-btn" id="back-btn">← Back</button> <button class="nav-btn next-btn-twister" id="next-btn-twister">Next →</button>
        </div>
        <div class="control-section" style="margin-top:12px;">
         <div class="mic-row">
-         <div style="display:flex;align-items:center;gap:8px;">
-          <img src="https://i.imgur.com/dm9RVTU.png" alt="logo" style="height:48px;">
+         <div style="display:flex;align-items:center;gap:8px;"><img src="https://i.imgur.com/dm9RVTU.png" alt="logo" style="height:48px;">
          </div><button class="mic-button" id="record-btn" title="Tap to record">
-          <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-           <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg></button>
          <div class="side-score" id="side-score-display" style="display:flex;">
           <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
@@ -119,7 +116,8 @@
             Score
            </div>
            <div class="score-ring" id="side-score-ring" style="--score-percent:0%;width:100px;height:100px;">
-            <div class="score-inner" style="width:88px;height:88px;font-size:28px;"><span id="side-score-value">0</span>
+            <div class="score-inner" style="width:88px;height:88px;font-size:28px;">
+             <span id="side-score-value">0</span>
             </div>
            </div>
           </div>
@@ -136,8 +134,7 @@
         </div>
         <div class="results-section" id="results" style="display:none;">
          <div class="feedback-text" id="feedback"></div>
-         <div class="button-group">
-          <button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn" onclick="playClickSound();">Next</button>
+         <div class="button-group"><button class="try-again-btn" id="try-again">Try Again</button> <button class="next-btn" id="next-btn" onclick="playClickSound();">Next</button>
          </div>
         </div>
        </div>
@@ -216,56 +213,65 @@
       recognition = new SpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
-      recognition.lang = "en-GB";
+      recognition.lang = "en-US";
+      recognition.maxAlternatives = 1;
 
-      const SILENCE_THRESHOLD = 1500;
+      const SILENCE_THRESHOLD = 2000;
 
       recognition.onstart = () => {
-        console.log("Speech recognition started");
-        statusText.innerText = "Listening...";
+        isRecording = true;
+        recordBtn.classList.add("listening");
+        statusText.innerText = "🎤 Listening...";
+        document.getElementById("live-transcript").innerText = "";
+        document.getElementById("live-transcript").style.display = "none";
       };
 
       recognition.onresult = (e) => {
-        console.log("Speech result received", e.results.length);
         if (silenceTimeout) clearTimeout(silenceTimeout);
         
         let interimTranscript = "";
         for (let i = e.resultIndex; i < e.results.length; i++) {
-          const segment = e.results[i][0].transcript;
-          console.log("Segment:", segment, "Final:", e.results[i].isFinal);
-          if (e.results[i].isFinal) transcript += segment + " ";
-          else interimTranscript += segment;
+          const segment = e.results[i][0].transcript.trim();
+          if (segment) {
+            if (e.results[i].isFinal) {
+              transcript += segment + " ";
+            } else {
+              interimTranscript += segment;
+            }
+          }
         }
         
-        transcript = transcript.trim();
         const liveTranscriptBox = document.getElementById("live-transcript");
-        const fullLiveText = (transcript + " " + interimTranscript).trim();
-        liveTranscriptBox.innerText = fullLiveText;
-        liveTranscriptBox.style.display = fullLiveText ? "block" : "none";
+        const displayText = (transcript + interimTranscript).trim();
         
+        if (displayText) {
+          liveTranscriptBox.innerText = displayText;
+          liveTranscriptBox.style.display = "block";
+        }
+        
+        // Reset silence timer on any audio
         silenceTimeout = setTimeout(() => {
-          console.log("Silence detected, transcript:", transcript);
           if (transcript.trim().length > 0) {
-            try { stopRecording(); } catch(e) { console.warn(e); }
-            if (!resultBox.classList.contains('show')) showResult();
+            stopRecording();
+            showResult();
           }
         }, SILENCE_THRESHOLD);
       };
 
       recognition.onend = () => {
-        console.log("Speech recognition ended");
         isRecording = false;
         recordBtn.classList.remove("listening");
+        if (silenceTimeout) clearTimeout(silenceTimeout);
       };
 
       recognition.onerror = (e) => {
-        console.error("Speech Recognition Error:", e.error);
         let msg = `❌ Error: ${e.error}`;
-        if (e.error === "not-allowed") msg = "❌ Permission denied. Microphone access blocked.";
-        else if (e.error === "no-speech") msg = "❌ No speech detected. Try speaking louder.";
-        else if (e.error === "network") msg = "❌ Network error. Check your connection.";
+        if (e.error === "not-allowed") msg = "❌ Microphone blocked. Check permissions.";
+        else if (e.error === "no-speech") msg = "❌ No speech detected. Speak clearly.";
+        else if (e.error === "network") msg = "❌ Network error. Retry.";
         statusText.innerText = msg;
-        stopRecording();
+        isRecording = false;
+        recordBtn.classList.remove("listening");
       };
 
       return true;
@@ -280,13 +286,19 @@
       document.getElementById("live-transcript").innerText = "";
       document.getElementById("live-transcript").style.display = "none";
       if (silenceTimeout) { clearTimeout(silenceTimeout); silenceTimeout = null; }
+      
       isRecording = true;
       recordBtn.classList.add("listening");
-      statusText.innerText = "Listening...";
+      statusText.innerText = "🎤 Listening...";
+      
       try { 
-        recognition.abort();
-        recognition.start(); 
-      } catch (e) { console.warn('recognition.start()', e); }
+        recognition.stop();
+        setTimeout(() => {
+          recognition.start();
+        }, 100);
+      } catch (e) { 
+        console.warn('startRecording error:', e); 
+      }
     }
 
     function stopRecording() {
@@ -582,5 +594,5 @@
     }
   </script>
   </div>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc0bd70927ec786',t:'MTc3MzQ2NDY5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc0c48c2386c786',t:'MTc3MzQ2NDk4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
