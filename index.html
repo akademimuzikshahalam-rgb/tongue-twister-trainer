@@ -17,7 +17,7 @@
     .app-wrapper { height:100%; width:100%; display:flex; align-items:center; justify-content:center; padding:12px; overflow:auto; }
     .card { background:white; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.18); width:100%; max-width:840px; overflow:hidden; }
     .header-section { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; padding:16px; text-align:center; }
-    .header-section h1 { margin:0; font-size:22px; font-weight:700; }
+    .header-section h1 { margin:0; font-size:22px; font-weight:700; display:inline-block; vertical-align:middle; }
     .content-section { padding:14px; }
 
     .twister-box { background:#f8f9ff; padding:12px; border-radius:10px; font-size:22px; font-weight:700; color:#111827; line-height:1.3; border:2px solid #e6eefc; text-align:center; }
@@ -43,6 +43,17 @@
     .feedback-text { color:#374151; font-size:13px; text-align:center; }
 
     footer { text-align:center; padding:12px; font-weight:700; color:rgba(255,255,255,0.9); background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); margin-top:12px; }
+
+    .fireworks-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+    .firework { position:absolute; pointer-events:none; }
+    @keyframes burst { 0% { opacity:1; transform:translate(0,0) scale(1); } 100% { opacity:0; transform:translate(var(--tx),var(--ty)) scale(0); } }
+    .firework-particle { animation:burst 1s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+
+    /* header logo */
+    .header-logo { height:36px; vertical-align:middle; margin-right:8px; display:inline-block; }
+    .header-tools { position:absolute; right:18px; top:18px; display:flex; gap:8px; }
+    .header-tools button { background:transparent; border:none; color:white; font-weight:700; cursor:pointer; padding:6px 8px; border-radius:6px; }
+    .disabled { opacity:0.45; cursor:not-allowed; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
@@ -50,28 +61,65 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body>
+  <div class="fireworks-container" id="fireworks-container"></div>
   <div class="app-wrapper">
    <div class="card">
-    <div class="header-section">
-     <h1>Tongue Twister Trainer</h1>
-     <div style="font-size:12px;opacity:.9;margin-top:6px;">
+    <div class="header-section" style="position:relative;">
+     <!-- Speak Up logo loaded from same folder; change filename if different -->
+     <img src="./Speak Up Logo.png" alt="Speak Up Logo" class="header-logo" onerror="this.style.display='none'">
+     <h1 style="display:inline-block;vertical-align:middle;margin-left:6px;">Speak Up</h1>
+
+     <div class="header-tools" aria-hidden="true">
+       <!-- kept for visual consistency; not required to be functional -->
+       <!-- empty intentionally -->
+     </div>
+
+     <div style="font-size:12px;opacity:.9;margin-top:8px;">
+      Tongue Twister Trainer
+     </div>
+     <div style="font-size:11px;opacity:.85;margin-top:4px;">
       Practice speaking clearly — with live mic feedback
      </div>
     </div>
+
     <div class="content-section"><!-- HOME PAGE -->
      <div id="home-page" style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 0;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
+       <h2 style="margin:0;font-size:20px;color:#667eea;">Speak Up</h2>
+      </div>
       <div style="text-align:center;">
        <p style="font-size:16px;color:#374151;margin:0;margin-bottom:8px;">Choose your difficulty level:</p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;"><button id="easy-btn" style="background:#10b981;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(16,185,129,0.3);">🟢 Easy</button> <button id="medium-btn" style="background:#f59e0b;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(245,158,11,0.3);">🟠 Medium</button> <button id="hard-btn" style="background:#ef4444;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(239,68,68,0.3);">🔴 Hard</button>
+
+      <!-- Home page Back (disabled) & Next removed per request -->
+      <div style="display:flex;gap:8px;align-items:center;justify-content:center;">
+        <button id="home-back-btn" class="disabled" aria-disabled="true" style="background:#e6eefc;color:#667eea;border-radius:12px;padding:10px 14px;border:none;font-weight:700;cursor:default;">← Back</button>
+        <!-- Next button removed from main-level selector as requested -->
       </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;">
+        <button id="easy-btn" style="background:#10b981;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(16,185,129,0.3);">🟢 Easy</button>
+        <button id="medium-btn" style="background:#f59e0b;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(245,158,11,0.3);">🟠 Medium</button>
+        <button id="hard-btn" style="background:#ef4444;color:white;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(239,68,68,0.3);">🔴 Hard</button>
+      </div>
+
      </div><!-- TRAINER PAGE -->
      <div id="trainer-page" style="display:none;">
       <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px;">
-       <div style="font-size:13px;color:#374151;font-weight:700;">
-        Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
-       </div><button id="home-btn" style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 8px;color:#667eea;font-weight:700;">⏠ Home</button>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="back-btn" style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 8px;color:#667eea;font-weight:700;">← Back</button>
+          <div style="font-size:13px;color:#374151;font-weight:700;">
+            Challenge <span id="twister-number">1</span> of <span id="total-twisters">5</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="home-btn" style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 8px;color:#667eea;font-weight:700;">⏠ Home</button>
+          <!-- New Next button top-right to advance twister -->
+          <button id="next-twister-top" style="background:none;border:none;font-size:16px;cursor:pointer;padding:4px 8px;color:#667eea;font-weight:700;">Next →</button>
+        </div>
       </div>
+
       <div class="twister-box" id="tongue-twister">
        She sells seashells at the seashore, the shells she sells are surely seashells
       </div>
@@ -79,47 +127,50 @@
        Cakap betul-betul, bulat-bulat!
       </div>
       <div class="control-section">
-       <div class="mic-row"><button id="record-btn" class="mic-button" title="Tap to record">
-         <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-         </svg></button>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-         <div class="status-row">
-          <div id="record-status" class="status-text">
-           Tap to start recording
-          </div>
-          <div id="mic-permission" class="mic-permission">
-           Mic: unknown
+       <div class="mic-row">
+         <button id="record-btn" class="mic-button" title="Tap to record" aria-pressed="false">
+           <svg width="56" height="56" viewbox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 35C29.4183 35 33 31.4183 33 27V15C33 10.5817 29.4183 7 25 7C20.5817 7 17 10.5817 17 15V27C17 31.4183 20.5817 35 25 35Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14 27C14 32 18.5 36.5 25 36.5C31.5 36.5 36 32 36 27" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M25 36.5V43" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M19 43H31" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+           </svg>
+         </button>
+
+         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+           <div class="status-row">
+            <div id="record-status" class="status-text">Tap to start recording</div>
+            <div id="mic-permission" class="mic-permission">Mic: unknown</div>
+           </div>
+           <canvas id="mic-meter" width="220" height="18" aria-hidden="true"></canvas>
+         </div>
+
+         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div style="font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:600;">Score</div>
+          <div class="score-ring" id="score-ring" style="--score-percent:0%;">
+           <div class="score-inner"><span id="score-value">0</span></div>
           </div>
          </div>
-         <canvas id="mic-meter" width="220" height="18" aria-hidden="true"></canvas>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-         <div style="font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:600;">
-          Score
-         </div>
-         <div class="score-ring" id="score-ring" style="--score-percent:0%;">
-          <div class="score-inner">
-           <span id="score-value">0</span>
-          </div>
-         </div>
-        </div>
        </div>
+
        <div id="live-transcript" class="live-transcript-box" aria-live="polite"></div>
+
        <div id="results" class="results-section">
         <div id="feedback" class="feedback-text"></div>
-        <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;"><button id="try-again" style="background:#667eea;color:#fff;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;">Try again</button> <button id="next-btn" style="background:#e6eefc;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;">Next</button>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+          <button id="try-again" style="background:#667eea;color:#fff;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;font-weight:600;">Try again</button>
+          <button id="next-btn" style="background:#e6eefc;color:#667eea;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;font-weight:600;">Next →</button>
         </div>
        </div>
       </div>
      </div>
     </div>
-    <footer>
-     Created by Teacher Gilbert
-    </footer>
+    <footer>Created by Teacher Gilbert</footer>
    </div>
   </div>
+
   <script>
+/* ====== Data ====== */
 const tongueTwistersByDifficulty = {
   easy: ["Red fat cat","Blue bird flew","Green grass grows","Yellow sun shines","Purple flower blooms","Fuzzy bees buzz","Fast first fish","Silly seals sleep","Tiny toy train","Bouncy ball"],
   medium: ["She sells seashells at the seashore, the shells she sells are surely seashells","Peter Piper picked a peck of pickled peppers, a peck of pickled peppers Peter Piper picked","Red lorry, yellow lorry, red lorry, yellow lorry, red lorry, yellow lorry","Unique New York unique New York unique New York you need New York","How much wood would a woodchuck chuck if a woodchuck could chuck wood","Betty Botter bought a bit of butter, but the butter was bitter","Sally sells seashells by the seashore","Toy boat, toy boat, toy boat"],
@@ -129,6 +180,7 @@ const tongueTwistersByDifficulty = {
 let currentDifficulty = null;
 let currentIndex = 0;
 
+/* ====== UI refs ====== */
 const homePage = document.getElementById('home-page');
 const trainerPage = document.getElementById('trainer-page');
 const recordBtn = document.getElementById('record-btn');
@@ -144,11 +196,56 @@ const twisterText = document.getElementById('tongue-twister');
 const twisterNumber = document.getElementById('twister-number');
 const totalTwisters = document.getElementById('total-twisters');
 
-document.getElementById('easy-btn').addEventListener('click', () => startLevel('easy'));
-document.getElementById('medium-btn').addEventListener('click', () => startLevel('medium'));
-document.getElementById('hard-btn').addEventListener('click', () => startLevel('hard'));
-document.getElementById('home-btn').addEventListener('click', goHome);
+/* header/back/next buttons */
+const homeBackBtn = document.getElementById('home-back-btn');
+const easyBtn = document.getElementById('easy-btn');
+const mediumBtn = document.getElementById('medium-btn');
+const hardBtn = document.getElementById('hard-btn');
+const backBtn = document.getElementById('back-btn');
+const homeBtn = document.getElementById('home-btn');
+const nextTopBtn = document.getElementById('next-twister-top');
+const nextBtn = document.getElementById('next-btn'); // results area next
 
+/* ====== Listeners ====== */
+easyBtn.addEventListener('click', () => startLevel('easy'));
+mediumBtn.addEventListener('click', () => startLevel('medium'));
+hardBtn.addEventListener('click', () => startLevel('hard'));
+homeBtn.addEventListener('click', goHome);
+
+backBtn.addEventListener('click', () => {
+  const list = tongueTwistersByDifficulty[currentDifficulty];
+  currentIndex = (currentIndex - 1 + list.length) % list.length;
+  updateTwister();
+});
+
+nextTopBtn.addEventListener('click', () => {
+  const list = tongueTwistersByDifficulty[currentDifficulty];
+  currentIndex = (currentIndex + 1) % list.length;
+  updateTwister();
+});
+
+nextBtn.addEventListener('click', () => {
+  const list = tongueTwistersByDifficulty[currentDifficulty];
+  currentIndex = (currentIndex + 1) % list.length;
+  updateTwister();
+});
+
+/* home back has no previous page - keep disabled */
+homeBackBtn.addEventListener('click', () => {
+  // intentionally empty — no previous page from home
+});
+
+/* try again resets */
+document.getElementById('try-again').addEventListener('click', () => {
+  feedbackBox.innerText = '';
+  resultsBox.style.display = 'none';
+  transcript = '';
+  liveTranscript.innerText = '';
+  liveTranscript.style.display = 'none';
+  recordStatus.innerText = 'Tap to start recording';
+});
+
+/* ====== Flow control ====== */
 function startLevel(difficulty) {
   currentDifficulty = difficulty;
   currentIndex = 0;
@@ -190,6 +287,7 @@ function updateTwister() {
   scoreRing.style.setProperty('--score-percent', '0%');
 }
 
+/* ====== SpeechRecognition + meter (same as before) ====== */
 let recognition = null;
 let isRecording = false;
 let transcript = '';
@@ -424,6 +522,7 @@ async function startRecording() {
   try {
     recognition.start();
     isRecording = true;
+    recordBtn.setAttribute('aria-pressed','true');
   } catch (err) {
     console.warn('recognition.start err', err);
     try {
@@ -442,9 +541,11 @@ function stopRecording() {
   } catch (e) { console.warn('recognition.stop err', e); }
   stopMicMeter();
   recordBtn.classList.remove('listening');
+  recordBtn.setAttribute('aria-pressed','false');
   recordStatus.innerText = 'Tap to start recording';
 }
 
+/* ====== scoring + fireworks (kept) ====== */
 function calculateScore(original, spoken) {
   const o = original.toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
   const s = (spoken||'').toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
@@ -463,7 +564,6 @@ function calculateScore(original, spoken) {
   let score = Math.round(accuracy * 10);
   return Math.max(1, Math.min(10, score));
 }
-
 function levenshteinSimilarity(a,b){
   const longer = a.length > b.length ? a : b;
   const shorter = a.length > b.length ? b : a;
@@ -471,7 +571,6 @@ function levenshteinSimilarity(a,b){
   const ed = getEditDistance(longer, shorter);
   return (longer.length - ed) / longer.length;
 }
-
 function getEditDistance(a,b){
   const costs = [];
   for (let i=0;i<=a.length;i++){
@@ -510,6 +609,37 @@ function playFireworks() {
     osc.start(time);
     osc.stop(time + 0.3);
   }
+
+  // Visual fireworks display
+  const container = document.getElementById('fireworks-container');
+  const colors = ['#fbbf24', '#f87171', '#60a5fa', '#34d399', '#a78bfa', '#fb7185', '#fcd34d'];
+  
+  for (let i = 0; i < 60; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'firework-particle';
+    
+    const x = Math.random() * window.innerWidth;
+    const y = window.innerHeight / 2;
+    
+    const angle = (Math.random() * Math.PI * 2);
+    const distance = Math.random() * 400 + 200;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.width = '8px';
+    particle.style.height = '8px';
+    particle.style.borderRadius = '50%';
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.setProperty('--tx', tx + 'px');
+    particle.style.setProperty('--ty', ty + 'px');
+    particle.style.boxShadow = '0 0 8px ' + particle.style.background;
+    
+    container.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 1000);
+  }
 }
 
 function showResult(){
@@ -518,38 +648,26 @@ function showResult(){
   scoreValue.innerText = score;
   scoreRing.style.setProperty('--score-percent', (score * 10) + '%');
   
-  if (score >= 7) {
+  if (score >= 8) {
     playFireworks();
   }
   
-  feedbackBox.innerText = score >= 9 ? '🌟 Excellent pronunciation!' : (score >=7 ? '👏 Very clear speech!' : (score>=5? '👍 Good effort. Have another go!':'💪 Slow down and pronounce each word clearly.'));
+  feedbackBox.innerText = score >= 9 ? '🌟 Excellent pronunciation!' : (score >=8 ? '🎉 Fantastic! Amazing speech!' : (score>=7? '👏 Very clear speech!' : (score>=5? '👍 Good effort. Have another go!':'💪 Slow down and pronounce each word clearly.')));
   resultsBox.style.display = 'block';
   recordStatus.innerText = 'Tap to record again';
 }
 
+/* ====== record button wiring ====== */
 recordBtn.addEventListener('click', async () => {
   if (isRecording) {
     stopRecording();
+    if ((transcript||'').trim().length > 0) showResult();
   } else {
     await startRecording();
   }
 });
 
-document.getElementById('try-again').addEventListener('click', () => {
-  feedbackBox.innerText = '';
-  resultsBox.style.display = 'none';
-  transcript = '';
-  liveTranscript.innerText = '';
-  liveTranscript.style.display = 'none';
-  recordStatus.innerText = 'Tap to start recording';
-});
-
-document.getElementById('next-btn').addEventListener('click', () => {
-  const list = tongueTwistersByDifficulty[currentDifficulty];
-  currentIndex = (currentIndex + 1) % list.length;
-  updateTwister();
-});
-
+/* ====== init meter background and state ====== */
 setMicPermissionText('unknown');
 (function initMeterBackground(){
   const ctx = micMeterCanvas.getContext('2d');
@@ -571,6 +689,8 @@ setMicPermissionText('unknown');
     if (stroke) c.stroke();
   }
 })();
-</script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc1a63d408da483',t:'MTc3MzQ3NDIyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+  </script>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dc1b11be004a483',t:'MTc3MzQ3NDY3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
