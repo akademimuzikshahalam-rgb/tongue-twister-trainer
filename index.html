@@ -63,21 +63,24 @@
    <div class="card">
     <div class="header-section">
      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
-      <!-- moved the Speak Up PNG logo to the top header, replacing the small svg and heading text -->
-      <img src="./speak-up-logo.png" alt="Speak Up logo" style="height:56px; display:block;"/>
+      <svg width="32" height="32" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="28" height="20" rx="4" fill="white" opacity="0.15" /> <path d="M10 16L14 12L18 16L22 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" /> <circle cx="22" cy="12" r="1.5" fill="white" /> <path d="M8 26L8 28M16 26L16 28M24 26L24 28" stroke="white" stroke-width="2" stroke-linecap="round" /> <path d="M6 28L26 28" stroke="white" stroke-width="2" stroke-linecap="round" /> <circle cx="16" cy="16" r="14" stroke="white" stroke-width="1.5" fill="none" opacity="0.6" />
+      </svg>
+      <h1 style="margin:0;">Speak Up</h1>
      </div>
-     <!-- Tongue Twister Trainer: doubled size (was 12px -> now 24px) -->
-     <div style="font-size:24px;opacity:1;font-weight:600;margin-top:6px;">
+     <div style="font-size:12px;opacity:.9;">
       Tongue Twister Trainer
      </div>
-     <!-- subtitle is 75% of the Tongue Twister Trainer size (24px * 0.75 = 18px) -->
-     <div style="font-size:18px;opacity:.85;margin-top:6px;">
+     <div style="font-size:11px;opacity:.85;margin-top:4px;">
       Practice speaking clearly — with live mic feedback
      </div>
     </div>
     <div class="content-section"><!-- HOME PAGE -->
      <div id="home-page" style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px 0;">
-      <!-- removed the small svg that used to sit here and removed the duplicate logo image -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
+       <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="#667eea" stroke-width="2" /> <path d="M14 8V14M14 14L18 18" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /> <path d="M10 10C9 11 8.5 12.5 8.5 14C8.5 17.3137 11.1863 20 14.5 20" stroke="#667eea" stroke-width="1.5" stroke-linecap="round" />
+       </svg>
+       <h2 style="margin:0;font-size:20px;color:#667eea;">Speak Up</h2>
+      </div>
       <div style="text-align:center;">
        <p style="font-size:16px;color:#374151;margin:0;margin-bottom:8px;">Choose your difficulty level:</p>
       </div>
@@ -501,12 +504,56 @@ function stopRecording() {
   recordStatus.innerText = 'Tap to start recording';
 }
 
+/* =========================
+   Updated scoring helpers - Option A (normalize digits -> words)
+   Replaces calculateScore + levenshtein helpers
+   ========================= */
+
+function numberToWords(n) {
+  const small = ['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+    'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  if (n <= 20) return small[n];
+  if (n < 100) {
+    const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+    const t = Math.floor(n/10);
+    const r = n % 10;
+    return r === 0 ? tens[t] : tens[t] + (r ? ' ' + small[r] : '');
+  }
+  // For larger numbers, return numeric string (unlikely needed for tongue-twisters)
+  return String(n);
+}
+
+function replaceDigitsWithWords(str) {
+  if (!str) return '';
+  // Replace standalone numeric tokens like "3" or "15" with words
+  return str.replace(/\b\d+\b/g, function(m){
+    const n = parseInt(m, 10);
+    if (isNaN(n)) return m;
+    return numberToWords(n);
+  });
+}
+
+function normalizeForComparison(str) {
+  if (!str) return '';
+  // Convert digits to words first
+  str = replaceDigitsWithWords(str);
+  // Lowercase and remove punctuation except apostrophes
+  str = str.toLowerCase().replace(/[^\w\s']/g,'');
+  // Collapse whitespace
+  return str.replace(/\s+/g,' ').trim();
+}
+
 function calculateScore(original, spoken) {
-  const o = original.toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
-  const s = (spoken||'').toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(w=>w.length);
+  // Normalize both strings (digits -> words, remove punctuation, lowercase)
+  const o = normalizeForComparison(original).split(/\s+/).filter(w=>w.length);
+  const s = normalizeForComparison(spoken||'').split(/\s+/).filter(w=>w.length);
+
+  // Very short attempts are penalized
   if (s.length < o.length * 0.8) return 1;
+
   let exactMatches = 0;
   const used = new Set();
+
   o.forEach(word => {
     for (let i=0;i<s.length;i++){
       if (used.has(i)) continue;
@@ -514,15 +561,17 @@ function calculateScore(original, spoken) {
       if (sim >= 0.85) { exactMatches++; used.add(i); break; }
     }
   });
+
   const accuracy = exactMatches / o.length;
   if (accuracy < 0.70) return 1;
+
   let score = Math.round(accuracy * 10);
   return Math.max(1, Math.min(10, score));
 }
 
 function levenshteinSimilarity(a,b){
-  const longer = a.length > b.length ? a : b;
-  const shorter = a.length > b.length ? b : a;
+  const longer = a.length >= b.length ? a : b;
+  const shorter = a.length >= b.length ? b : a;
   if (longer.length === 0) return 1;
   const ed = getEditDistance(longer, shorter);
   return (longer.length - ed) / longer.length;
@@ -546,6 +595,9 @@ function getEditDistance(a,b){
   return costs[b.length];
 }
 
+/* =========================
+   Fireworks & UI flow (unchanged)
+   ========================= */
 function playFireworks() {
   try {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -586,6 +638,7 @@ function playFireworks() {
 
   // Visual fireworks display
   const container = document.getElementById('fireworks-container');
+  if (!container) return;
   const colors = ['#fbbf24', '#f87171', '#60a5fa', '#34d399', '#a78bfa', '#fb7185', '#fcd34d'];
   
   for (let i = 0; i < 80; i++) {
