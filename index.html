@@ -12,7 +12,7 @@
   *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
   body{margin:0;min-height:100vh;background:linear-gradient(135deg,#e6eefc 0,#f8fafc 100%);display:flex;align-items:center;justify-content:center;padding:18px;}
   .app { width: 100%; max-width: 980px; background:white;border-radius:14px;box-shadow:0 12px 40px rgba(8,15,40,0.12); overflow:hidden; }
-  header{background:linear-gradient(135deg,var(--accent),#764ba2);color:white;padding:18px 20px;display:flex;align-items:center;gap:14px;position:relative;}
+  header{background:linear-gradient(135deg,var(--accent),#764ba2);color:white;padding:14px 18px;display:flex;align-items:center;gap:14px;position:relative;}
   header .logo-wrap{display:flex;align-items:center;gap:12px;}
   header img.logo{height:46px; width:auto; object-fit:contain; display:inline-block;}
   header object.logo-pdf{height:46px;width:auto; display:none;border:none;}
@@ -24,7 +24,7 @@
   .title-row h2{margin:0;font-size:24px;font-weight:700;color:var(--accent);font-family:Poppins;}
   .title-row .subtitle{font-size:13px;color:#334155;}
 
-  .controls {display:flex;gap:12px;justify-content:center;margin-bottom:16px;}
+  .controls {display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;}
   .controls button{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
   .btn-easy{background:#10b981;color:white}
   .btn-medium{background:var(--orange);color:white}
@@ -60,6 +60,8 @@
 
   .footer-note { margin-top:20px; text-align:center; font-weight:700; color:#0f172a; padding:10px 12px; border-top:1px dashed #eef2ff; }
 
+  .hidden{ display:none !important; }
+
   /* responsive */
   @media (max-width:860px){
     .stage { flex-direction:column; align-items:stretch; }
@@ -74,11 +76,6 @@
   <div class="app" id="app">
     <header>
       <div class="logo-wrap">
-        <!-- image fallback order:
-             1) local ./Speak Up Logo.png (if you add a PNG in repo root)
-             2) GitHub raw PDF (Speak Up Logo.pdf) loaded into <object>
-             3) hide logo if none available
-        -->
         <img class="logo" id="logoImg" alt="Speak Up Logo" src="" />
         <object id="logoObj" class="logo-pdf" type="application/pdf" data="" width="46" height="46" aria-hidden="true"></object>
       </div>
@@ -89,166 +86,211 @@
     </header>
 
     <main>
-      <div class="title-row">
-        <h2>Tongue Twister Trainer</h2>
-        <div class="subtitle">Choose a level and press the mic to start</div>
-      </div>
-
-      <div style="display:flex;justify-content:center;margin-bottom:12px;">
-        <div class="controls" role="tablist" aria-label="difficulty levels">
-          <button id="btnEasy" class="btn-easy">Easy</button>
-          <button id="btnMed" class="btn-medium">Medium</button>
-          <button id="btnHard" class="btn-hard">Hard</button>
-        </div>
-      </div>
-
-      <!-- Twister card -->
-      <div class="twister-card">
-        <div id="twisterText" class="twister-text">Press a difficulty to begin</div>
-
-        <div class="nav-under">
-          <button id="btnBack">← Back</button>
-          <button id="btnNext">Next →</button>
+      <!-- HOME / LEVEL SELECTOR -->
+      <section id="homePage">
+        <div class="title-row">
+          <h2>Choose difficulty</h2>
+          <div class="subtitle">Pick a level to begin — then press the mic</div>
         </div>
 
-        <div class="instruction">Cakap Betul Betul, Bulat Bulat!</div>
-      </div>
-
-      <!-- Stage -->
-      <div class="stage" aria-live="polite">
-        <div class="left">
-          <button id="micBtn" class="mic-button" aria-pressed="false" title="Tap to record">
-            <svg id="micIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" style="display:block">
-              <path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-              <path d="M19 11v1a7 7 0 0 1-14 0v-1" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-              <path d="M12 19v3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span id="micLabel" style="display:block;font-size:12px;margin-top:6px;">Tap to record</span>
-          </button>
-        </div>
-
-        <div class="center">
-          <div class="mic-meter-wrap" aria-hidden="true">
-            <div id="micMeterBar" class="mic-meter" style="height:6px; transform:rotate(-90deg); width:120px;"></div>
+        <div style="display:flex;justify-content:center;margin-bottom:12px;">
+          <div class="controls" role="tablist" aria-label="difficulty levels">
+            <button id="btnEasy" class="btn-easy">Easy</button>
+            <button id="btnMed" class="btn-medium">Medium</button>
+            <button id="btnHard" class="btn-hard">Hard</button>
           </div>
         </div>
 
-        <div class="right">
-          <div style="text-align:center;">
-            <div style="font-size:11px;color:#64748b;font-weight:700;margin-bottom:6px;">Score</div>
-            <div id="scoreRing" class="score-ring" style="--score-percent:0%;">
-              <div class="score-inner" id="scoreInner">0</div>
+        <div style="display:flex;justify-content:center;gap:12px;">
+          <button id="homeBack" class="nav-under-btn nav-back" style="padding:10px 14px;border-radius:10px;border:1px solid #e6eefc;background:white;color:var(--accent);font-weight:700;cursor:pointer;">Back</button>
+          <!-- intentionally NO Next on the main level selector page per your request -->
+        </div>
+
+        <div style="height:12px;"></div>
+        <div class="footer-note"><strong>Tongue Twister Trainer</strong> — Created by <strong>Speak Up! Drama</strong></div>
+      </section>
+
+      <!-- TRAINER PAGE -->
+      <section id="trainerPage" class="hidden" aria-live="polite">
+        <div class="title-row">
+          <h2 id="pageTitle">Tongue Twister Trainer</h2>
+          <div class="subtitle" id="levelLabel">Level</div>
+        </div>
+
+        <div class="twister-card">
+          <div id="twisterText" class="twister-text">Press a difficulty to begin</div>
+
+          <div class="nav-under" style="margin-top:12px;">
+            <button id="btnBack" title="Previous twister">← Back</button>
+            <button id="btnNext">Next →</button>
+            <button id="btnHome" style="background:#fff;border:1px solid #e6eefc;color:var(--accent);padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Home</button>
+          </div>
+
+          <div class="instruction">Cakap Betul Betul, Bulat Bulat!</div>
+        </div>
+
+        <!-- Stage -->
+        <div class="stage" aria-live="polite" style="margin-bottom:4px;">
+          <div class="left">
+            <button id="micBtn" class="mic-button" aria-pressed="false" title="Tap to record">
+              <svg id="micIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" style="display:block">
+                <path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M19 11v1a7 7 0 0 1-14 0v-1" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 19v3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <span id="micLabel" style="display:block;font-size:12px;margin-top:6px;">Tap to record</span>
+            </button>
+          </div>
+
+          <div class="center">
+            <div class="mic-meter-wrap" aria-hidden="true">
+              <div id="micMeterBar" class="mic-meter" style="height:6px; transform:rotate(-90deg); width:120px; transform-origin:left center;"></div>
+            </div>
+          </div>
+
+          <div class="right">
+            <div style="text-align:center;">
+              <div style="font-size:11px;color:#64748b;font-weight:700;margin-bottom:6px;">Score</div>
+              <div id="scoreRing" class="score-ring" style="--score-percent:0%;">
+                <div class="score-inner" id="scoreInner">0</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div id="transcript" class="transcript" aria-live="polite"></div>
+        <div id="transcript" class="transcript" aria-live="polite"></div>
 
-      <div class="footer-note"><strong>Tongue Twister Trainer</strong> — Created by <strong>Speak Up! Drama</strong></div>
+        <div class="footer-note"><strong>Tongue Twister Trainer</strong> — Created by <strong>Speak Up! Drama</strong></div>
+      </section>
     </main>
   </div>
 
 <script>
-/* ========== CONFIG: point to your GitHub raw PDF ========== */
-/* repo: akademimuzikshahalam-rgb / tongue-twister-trainer
-   file in repo: Speak Up Logo.pdf (main branch)
-   raw URL constructed below (spaces encoded)
-*/
+/* LOGO config - tries local PNG first, then GitHub raw PDF */
 const GITHUB_LOGO_PDF = 'https://raw.githubusercontent.com/akademimuzikshahalam-rgb/tongue-twister-trainer/main/Speak%20Up%20Logo.pdf';
-const LOCAL_PNG = './Speak Up Logo.png'; // if you later replace PDF with PNG or add PNG, code will try this first
+const LOCAL_PNG = './Speak Up Logo.png';
+const logoImg = document.getElementById('logoImg');
+const logoObj = document.getElementById('logoObj');
 
-/* =========================
-   Tongue twisters
-   ========================= */
+(function loadLogo(){
+  const test = new Image();
+  test.onload = () => { logoImg.src = LOCAL_PNG; logoImg.style.display='inline-block'; logoObj.style.display='none'; };
+  test.onerror = () => { logoImg.style.display='none'; logoObj.data = GITHUB_LOGO_PDF; logoObj.style.display = 'inline-block'; };
+  test.src = LOCAL_PNG;
+})();
+
+/* Tongue twisters lists */
 const twisters = {
   easy: [
     "She sells seashells.",
     "Blue bird flew.",
-    "Kitty Cat ate a rat.",
-    "Yellow sun shines",
-    "Tiny toy train"
+    "Kitty cat chased the rat.",
+    "Yellow sun shines.",
+    "Tiny toy train."
   ],
   medium: [
     "She sells seashells at the seashore, the shells she sells are surely seashells",
-    "Peter Piper picked a peck of pickled peppers.",
+    "Peter Piper picked a peck of pickled peppers",
     "Red lorry, yellow lorry, red lorry, yellow lorry",
-    "Unique New York, unique New York, you need New York!",
-    "If two witches would watch two watches, which witch would watch which watch?"
+    "Unique New York, unique New York",
+    "Toy boat, toy boat, toy boat"
   ],
   hard: [
-    "How much wood would a woodchuck chuck if a woodchuck could chuck wood. He would chuck as much wood as he could as a woodchck could chuck wood. ",
-    "Peter Piper picked a pack of pickled peppers. A pack of pickled peppers Peter Piper picked. If Peter Piper picked and pack of pickled peppers, where's the pack of pickled peppers Peter Piper Picked?",
-    "I saw Susie sitting in a shoeshine shop where she shines she works, and where she works, she shines!",
+    "How much wood would a woodchuck chuck if a woodchuck could chuck wood",
+    "The sixth sick sheik's sixth sheep's sick",
+    "I saw Susie sitting in a shoeshine shop where she shines shoes and socks for cash",
     "Irish wristwatch, Irish wristwatch",
     "Red leather, yellow leather"
   ]
 };
 
-/* =========================
-   UI references & state
-   ========================= */
-let currentLevel = null;
-let currentIndex = 0;
-const twisterTextEl = document.getElementById('twisterText');
-const btnBack = document.getElementById('btnBack');
-const btnNext = document.getElementById('btnNext');
+/* UI references & state */
+const homePage = document.getElementById('homePage');
+const trainerPage = document.getElementById('trainerPage');
+const levelLabel = document.getElementById('levelLabel');
+const pageTitle = document.getElementById('pageTitle');
+
 const btnEasy = document.getElementById('btnEasy');
 const btnMed  = document.getElementById('btnMed');
 const btnHard = document.getElementById('btnHard');
+const homeBack = document.getElementById('homeBack');
+
+const btnBack = document.getElementById('btnBack');
+const btnNext = document.getElementById('btnNext');
+const btnHome = document.getElementById('btnHome');
+const twisterTextEl = document.getElementById('twisterText');
+
 const micBtn = document.getElementById('micBtn');
 const micLabel = document.getElementById('micLabel');
 const micMeterBar = document.getElementById('micMeterBar');
+
 const scoreInnerEl = document.getElementById('scoreInner');
 const scoreRing = document.getElementById('scoreRing');
+
 const transcriptBox = document.getElementById('transcript');
-const logoImg = document.getElementById('logoImg');
-const logoObj = document.getElementById('logoObj');
 
-/* load logo: prefer local PNG, fallback to GitHub PDF object */
-(function loadLogo(){
-  // try local PNG first (fast path)
-  const tempImg = new Image();
-  tempImg.onload = () => {
-    logoImg.src = LOCAL_PNG;
-    logoImg.style.display = 'inline-block';
-    logoObj.style.display = 'none';
-  };
-  tempImg.onerror = () => {
-    // fallback to GitHub raw PDF: load into <object>
-    logoImg.style.display = 'none';
-    logoObj.data = GITHUB_LOGO_PDF;
-    logoObj.style.display = 'inline-block';
-    // object may not render as tiny icon in some browsers; acceptable as fallback
-  };
-  tempImg.src = LOCAL_PNG;
-})();
+let currentLevel = null;
+let currentIndex = 0;
 
-/* difficulty buttons */
+/* Home page back (you may wire it to another action; keep it as a no-op or go to previous app area) */
+homeBack.addEventListener('click', ()=> {
+  // Currently there is no previous area — just show a quick message
+  alert('You are on the main selector page.');
+});
+
+/* level selection */
 btnEasy.addEventListener('click', ()=> startLevel('easy'));
 btnMed.addEventListener('click', ()=> startLevel('medium'));
 btnHard.addEventListener('click', ()=> startLevel('hard'));
-btnBack.addEventListener('click', ()=> navigate(-1));
-btnNext.addEventListener('click', ()=> navigate(1));
 
-function startLevel(level) {
+/* trainer nav */
+btnBack.addEventListener('click', ()=> trainerNavigate(-1));
+btnNext.addEventListener('click', ()=> trainerNavigate(1));
+btnHome.addEventListener('click', ()=> {
+  stopRecording(); // ensure mic off
+  showHome();
+});
+
+function startLevel(level){
   currentLevel = level;
   currentIndex = 0;
+  showTrainer();
+  updateLevelUI();
   showTwister();
-  // simple UI emphasis
-  [btnEasy, btnMed, btnHard].forEach(b => b.style.opacity = '1');
-  if (level === 'easy') btnMed.style.opacity = btnHard.style.opacity = '0.7';
-  if (level === 'medium') btnEasy.style.opacity = btnHard.style.opacity = '0.7';
-  if (level === 'hard') btnEasy.style.opacity = btnMed.style.opacity = '0.7';
 }
 
-function navigate(delta){
+/* navigation for twisters within trainer */
+function trainerNavigate(delta){
   if (!currentLevel) return;
   const list = twisters[currentLevel];
   currentIndex = (currentIndex + delta + list.length) % list.length;
   showTwister();
 }
 
+function showHome(){
+  homePage.classList.remove('hidden');
+  trainerPage.classList.add('hidden');
+  currentLevel = null;
+  currentIndex = 0;
+  resetScore();
+}
+
+function showTrainer(){
+  homePage.classList.add('hidden');
+  trainerPage.classList.remove('hidden');
+}
+
+function updateLevelUI(){
+  levelLabel.innerText = `Level: ${capitalize(currentLevel)}`;
+  pageTitle.innerText = `${capitalize(currentLevel)} — Tongue Twister Trainer`;
+  // visual emphasis for level buttons (on home)
+  [btnEasy, btnMed, btnHard].forEach(b => b.style.opacity = '1');
+  if (currentLevel === 'easy') { btnMed.style.opacity = btnHard.style.opacity = '0.7'; }
+  if (currentLevel === 'medium') { btnEasy.style.opacity = btnHard.style.opacity = '0.7'; }
+  if (currentLevel === 'hard') { btnEasy.style.opacity = btnMed.style.opacity = '0.7'; }
+}
+
+/* show current twister */
 function showTwister(){
   twisterTextEl.innerText = twisters[currentLevel][currentIndex];
   transcriptBox.style.display = 'none';
@@ -256,9 +298,7 @@ function showTwister(){
   resetScore();
 }
 
-/* =========================
-   Speech / Mic Meter
-   ========================= */
+/* ========== Microphone, meter & speech recognition ========== */
 let recognition = null;
 let isListening = false;
 let transcript = '';
@@ -273,7 +313,7 @@ let meterAnimationId = null;
 
 async function setupMicMeter() {
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert('getUserMedia is not supported in this browser. Use Chrome or Edge.');
+    alert('getUserMedia is not supported in this browser. Please use Chrome or Edge.');
     return false;
   }
   if (meterStream) return true;
@@ -296,8 +336,8 @@ async function setupMicMeter() {
 function stopMicMeter() {
   if (meterAnimationId) cancelAnimationFrame(meterAnimationId);
   meterAnimationId = null;
-  if (analyser){ analyser.disconnect(); analyser=null; }
-  if (meterStream){ meterStream.getTracks().forEach(t=>t.stop()); meterStream=null; }
+  if (analyser){ try { analyser.disconnect(); } catch(e){} analyser=null; }
+  if (meterStream){ try { meterStream.getTracks().forEach(t=>t.stop()); } catch(e){} meterStream=null; }
   micMeterBar.style.transform = 'rotate(-90deg) scaleX(0.03)';
 }
 
@@ -363,10 +403,10 @@ function initRecognition() {
 
   recognition.onend = ()=> {
     if (isListening) {
-      // try to restart automatically for continuous listening
+      // attempt to restart for continuous listening
       try { recognition.start(); } catch(e) { console.warn('restart failed', e); }
     } else {
-      stopTime = performance.now();
+      stopTime = stopTime || performance.now();
       finalizeResult();
     }
   };
@@ -374,6 +414,7 @@ function initRecognition() {
   return true;
 }
 
+/* mic button behavior */
 micBtn.addEventListener('click', async ()=> {
   if (!currentLevel) {
     alert('Please select a difficulty (Easy / Medium / Hard) first.');
@@ -401,16 +442,19 @@ micBtn.addEventListener('click', async ()=> {
 });
 
 function stopRecording() {
+  if (!isListening) return;
   isListening = false;
   micBtn.classList.remove('listening');
   micBtn.setAttribute('aria-pressed','false');
   micLabel.innerText = 'Tap to record';
-  if (recognition) {
-    try { recognition.stop(); } catch(e) { console.warn(e); }
-  }
+  try {
+    if (recognition) recognition.stop();
+  } catch(e){ console.warn(e); }
+  stopTime = performance.now();
   stopMicMeter();
 }
 
+/* finalize & scoring */
 function finalizeResult(){
   stopTime = stopTime || performance.now();
   const durationSec = Math.max(0.5, (stopTime - startTime) / 1000);
@@ -418,9 +462,7 @@ function finalizeResult(){
   showResult(original, (transcript||'').trim(), durationSec);
 }
 
-/* =========================
-   Scoring algorithm
-   ========================= */
+/* scoring & UI result */
 function showResult(original, spoken, durationSec) {
   const score = calculateCompositeScore(original, spoken, durationSec);
   scoreInnerEl.innerText = score;
@@ -463,8 +505,7 @@ function calculateCompositeScore(original, spoken, durationSec) {
   const accuracy = exactMatches / oWords.length;
   const clarity = (used.size > 0) ? (claritySum / used.size) : 0;
   const wps = (sWords.length) / Math.max(0.5, durationSec);
-  const ideal = 2.0;
-  const maxDev = 2.0;
+  const ideal = 2.0; const maxDev = 2.0;
   const speedScore = Math.max(0, 1 - (Math.abs(wps - ideal) / maxDev));
 
   const wAcc = 0.6, wClarity = 0.2, wSpeed = 0.2;
@@ -500,58 +541,51 @@ function getEditDistance(a,b){
   return costs[b.length];
 }
 
+/* reset score UI */
 function resetScore(){
   scoreInnerEl.innerText = '0';
   scoreRing.style.setProperty('--score-percent','0%');
   transcriptBox.style.display = 'none';
   transcriptBox.innerText = '';
+  // reset mic meter visuals
+  micMeterBar.style.transform = 'rotate(-90deg) scaleX(0.03)';
 }
 
-/* =========================
-   Fireworks visuals + audio
-   ========================= */
+/* Fireworks visuals + audio */
 function playFireworks(perfect){
-  const durationMs = perfect ? 2200 : 1200;
   const particleCount = perfect ? 110 : 60;
-  createParticles(particleCount, perfect ? 1400 : 800);
+  const travelDist = perfect ? 1400 : 800;
+  createParticles(particleCount, travelDist, perfect);
   playFireworkSound(perfect);
 }
-function createParticles(count, travelDist){
+function createParticles(count, travelDist, perfect){
   const container = document.createElement('div');
-  container.style.position = 'fixed';
-  container.style.left = '0';
-  container.style.top = '0';
-  container.style.width = '100%';
-  container.style.height = '100%';
-  container.style.pointerEvents = 'none';
-  container.style.zIndex = 9999;
+  Object.assign(container.style, {
+    position:'fixed', left:0, top:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:9999
+  });
   document.body.appendChild(container);
   const colors = ['#fbbf24','#f97316','#fb7185','#60a5fa','#34d399','#a78bfa','#fcd34d'];
   for (let i=0;i<count;i++){
     const p = document.createElement('div');
-    p.style.position = 'absolute';
-    p.style.left = (window.innerWidth * 0.5 + (Math.random()*300 - 150)) + 'px';
-    p.style.top = (window.innerHeight * 0.35 + (Math.random()*200 - 100)) + 'px';
+    p.style.position='absolute';
+    p.style.left = (window.innerWidth*0.5 + (Math.random()*300 -150)) + 'px';
+    p.style.top  = (window.innerHeight*0.35 + (Math.random()*200 -100)) + 'px';
     const size = Math.random()*8 + 6;
     p.style.width = size + 'px';
     p.style.height = size + 'px';
     p.style.borderRadius = '50%';
     p.style.background = colors[Math.floor(Math.random()*colors.length)];
     p.style.boxShadow = '0 0 10px ' + p.style.background;
-    p.style.transform = 'translate(0,0) scale(1)';
-    p.style.opacity = '1';
     container.appendChild(p);
     const angle = Math.random() * Math.PI * 2;
     const dist = Math.random()*travelDist;
     const tx = Math.cos(angle) * dist;
     const ty = Math.sin(angle) * dist;
+    const dur = perfect ? 1600 + Math.random()*800 : 800 + Math.random()*500;
     p.animate([
-      { transform: 'translate(0,0) scale(1)', opacity:1 },
-      { transform: `translate(${tx}px, ${ty}px) scale(0.3)`, opacity:0 }
-    ], {
-      duration: perfect ? 1800 + Math.random()*700 : 900 + Math.random()*400,
-      easing: 'cubic-bezier(.2,.8,.2,1)'
-    });
+      { transform:'translate(0,0) scale(1)', opacity:1 },
+      { transform:`translate(${tx}px, ${ty}px) scale(0.3)`, opacity:0 }
+    ], { duration: dur, easing: 'cubic-bezier(.2,.8,.2,1)' });
     setTimeout(()=> p.remove(), perfect ? 2400 : 1100);
   }
   setTimeout(()=> container.remove(), perfect ? 2600 : 1200);
@@ -586,7 +620,11 @@ function playFireworkSound(perfect){
   } catch(e){ console.warn('AudioContext error', e); }
 }
 
-/* init defaults */
+/* utility */
+function capitalize(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+/* initial state */
+showHome();
 resetScore();
 
 </script>
