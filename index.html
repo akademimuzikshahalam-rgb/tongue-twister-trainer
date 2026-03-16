@@ -7,626 +7,200 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --accent:#667eea; --green:#22c55e; --orange:#f59e0b; --red:#ef4444; --bg:#f6f9ff;
+    --accent-1:#6d71f2; /* header gradient start */
+    --accent-2:#8b58b9; /* header gradient end */
+    --card-bg:#fff;
+    --muted:#64748b;
+    --green:#10b981;
+    --orange:#f59e0b;
+    --red:#ef4444;
+    --shadow: 0 18px 50px rgba(12,23,63,0.14);
+    --card-radius:18px;
   }
-  *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-  body{margin:0;min-height:100vh;background:linear-gradient(135deg,#e6eefc 0,#f8fafc 100%);display:flex;align-items:center;justify-content:center;padding:18px;}
-  .app { width: 100%; max-width: 980px; background:white;border-radius:14px;box-shadow:0 12px 40px rgba(8,15,40,0.12); overflow:hidden; }
-  header{background:linear-gradient(135deg,var(--accent),#764ba2);color:white;padding:14px 18px;display:flex;align-items:center;gap:14px;position:relative;}
-  header .logo-wrap{display:flex;align-items:center;gap:12px;}
-  header img.logo{height:46px; width:auto; object-fit:contain; display:inline-block;}
-  header object.logo-pdf{height:46px;width:auto; display:none;border:none;}
-  header h1{font-family:Poppins, sans-serif;margin:0;font-size:20px;font-weight:700;letter-spacing:0.3px;}
-  header p{margin:0;font-size:12px;opacity:0.95;}
+  *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background: linear-gradient(180deg,#6e62c9 0%, #6f5fcf 50%, #6f5fcf 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
 
-  main{padding:20px;}
-  .title-row{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:12px;}
-  .title-row h2{margin:0;font-size:24px;font-weight:700;color:var(--accent);font-family:Poppins;}
-  .title-row .subtitle{font-size:13px;color:#334155;}
+  .container{
+    width:100%;
+    max-width:1220px;
+    border-radius:24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.02) 100%);
+    padding:22px;
+    box-shadow:var(--shadow);
+  }
 
-  .controls {display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;}
-  .controls button{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-  .btn-easy{background:#10b981;color:white}
-  .btn-medium{background:var(--orange);color:white}
-  .btn-hard{background:var(--red);color:white}
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  }
 
-  .twister-card { border-radius:12px; background: linear-gradient(180deg,#ffffff,#fbfdff); padding:22px; box-shadow: 0 6px 18px rgba(18,38,71,0.06); text-align:center; margin-bottom:10px; }
-  .twister-text{font-size:28px;font-weight:700;color:#0f172a; line-height:1.15; padding:6px 8px;}
-  .nav-under { display:flex; gap:12px; justify-content:center; margin-top:12px; }
-  .nav-under button{padding:8px 14px;border-radius:8px;border:1px solid #e6eefc;background:white;color:var(--accent);font-weight:700;cursor:pointer}
-  .instruction { text-align:center; margin-top:8px; font-weight:800; color:#0f172a; font-size:15px; }
+  header.top {
+    background: linear-gradient(180deg,var(--accent-1),var(--accent-2));
+    padding:32px 36px;
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    position:relative;
+  }
+  .logo-wrap { width:120px; display:flex; align-items:flex-start; }
+  img.logo { width:120px; height:auto; display:block; object-fit:contain; border-radius:6px; background:#fff; padding:6px; }
+  .header-center { flex:1; text-align:center; color:#fff; padding-top:2px; }
+  .header-center h1 { margin:0; font-family:Poppins, sans-serif; font-weight:700; font-size:40px; letter-spacing:0.2px; text-shadow:0 3px 12px rgba(0,0,0,0.08); }
+  .header-center p { margin:6px 0 0; opacity:0.95; font-size:16px; }
 
-  .stage { display:flex; gap:18px; align-items:center; margin-top:18px; justify-content:space-between; }
-  .left, .center, .right { background:transparent; display:flex; align-items:center; justify-content:center; }
-  .left { width:170px; flex-direction:column; gap:10px; }
-  .center { flex:1; display:flex; justify-content:center; }
-  .right { width:170px; flex-direction:column; gap:10px; }
+  .header-right { min-width:220px; text-align:right; color:rgba(255,255,255,0.95); font-weight:600; align-self:flex-end; padding-top:4px; }
 
-  /* microphone button */
-  .mic-button { width:120px; height:120px; border-radius:999px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:white; cursor:pointer; box-shadow:0 8px 20px rgba(8,15,40,0.08); border:none; background:var(--green); transition:transform .12s, background .18s; }
-  .mic-button:active{ transform:scale(.98); }
-  .mic-button.listening{ background:var(--red); animation:pulse 1.6s infinite; }
-  @keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(239,68,68,0.5);} 50%{box-shadow:0 0 0 18px rgba(239,68,68,0);} 100%{box-shadow:0 0 0 0 rgba(239,68,68,0);} }
+  /* main card body */
+  .card-body { padding:28px 36px; }
+  .row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .choose-title { font-size:18px; font-weight:800; color:#334155; letter-spacing:0.2px; }
+  .created-right { color:#94a3b8; font-weight:700; }
 
-  /* vertical mic bar (center) */
-  .mic-meter-wrap{ width:40px; height:150px; background:#eef2ff;border-radius:12px;padding:6px; display:flex; align-items:flex-end; justify-content:center; }
-  .mic-meter { width:100%; border-radius:8px; background:linear-gradient(#60a5fa,#f59e0b,#ef4444); height:6px; transform-origin:left center; transition:height .06s linear; }
+  hr.div { border:0; height:1px; background:linear-gradient(90deg,#e6eefc,#f3f6ff); margin:18px 0; }
 
-  /* score ring */
-  .score-ring { width:140px; height:140px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:conic-gradient(var(--accent) var(--score-percent,0%), #eef2ff var(--score-percent,0%)); box-shadow:0 10px 22px rgba(8,15,40,0.06); }
-  .score-inner { width:112px; height:112px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:40px; color:var(--accent); box-shadow: inset 0 2px 6px rgba(0,0,0,0.03); }
+  /* difficulty buttons group */
+  .center-controls { display:flex; justify-content:center; gap:22px; margin:26px 0 6px; }
+  .btn {
+    min-width:120px;
+    padding:12px 20px;
+    border-radius:12px;
+    border:none;
+    font-weight:700;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(12,20,40,0.06);
+  }
+  .btn.easy { background:var(--green); color:#fff; }
+  .btn.medium { background:var(--orange); color:#fff; }
+  .btn.hard { background:var(--red); color:#fff; }
 
-  .transcript { margin-top:12px; min-height:36px; font-weight:700; color:#0f172a; display:none; padding:8px 12px; background:#fbfdff; border-radius:8px; border:1px solid #eef2ff; }
+  /* challenge text */
+  .challenge { margin-top:12px; color:#334155; font-weight:700; font-size:16px; }
 
-  .footer-note { margin-top:20px; text-align:center; font-weight:700; color:#0f172a; padding:10px 12px; border-top:1px dashed #eef2ff; }
-
-  .hidden{ display:none !important; }
+  /* big footer gradient bar inside the card */
+  .big-footer {
+    margin-top:20px;
+    height:56px;
+    border-radius:8px;
+    background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:800;
+    font-family:Poppins, sans-serif;
+    font-size:18px;
+  }
 
   /* responsive */
-  @media (max-width:860px){
-    .stage { flex-direction:column; align-items:stretch; }
-    .left, .center, .right { width:100%; justify-content:center; }
-    .mic-button { width:96px; height:96px; }
-    .mic-meter-wrap{ height:130px; }
-    .score-ring{ width:112px;height:112px; }
+  @media (max-width:920px){
+    .header-center h1 { font-size:28px; }
+    .logo-wrap { width:96px; }
+    .header-right { display:none; }
   }
 </style>
 </head>
 <body>
-  <div class="app" id="app">
-    <header>
-      <div class="logo-wrap">
-        <img class="logo" id="logoImg" alt="Speak Up Logo" src="" />
-        <object id="logoObj" class="logo-pdf" type="application/pdf" data="" width="46" height="46" aria-hidden="true"></object>
+  <div class="container">
+    <div class="card">
+      <header class="top">
+        <div class="logo-wrap">
+          <img id="logoImg" class="logo" alt="Speak Up Logo" src="" />
+        </div>
+
+        <div class="header-center">
+          <h1>Tongue Twister Trainer</h1>
+          <p>Practice speaking clearly</p>
+        </div>
+
+        <div class="header-right">Created By Teacher Gilbert</div>
+      </header>
+
+      <div class="card-body">
+        <div class="row" style="align-items:center;">
+          <div class="choose-title">CHOOSE DIFFICULTY</div>
+          <div class="created-right">Created By Teacher Gilbert</div>
+        </div>
+
+        <div class="center-controls" role="tablist" aria-label="difficulty">
+          <button id="btnEasy" class="btn easy">Easy</button>
+          <button id="btnMed" class="btn medium">Medium</button>
+          <button id="btnHard" class="btn hard">Hard</button>
+        </div>
+
+        <hr class="div" />
+
+        <div class="challenge">Challenge <span id="challengeIndex">1</span> of <span id="challengeTotal">6</span></div>
+
+        <div class="big-footer" id="bigFooter">Created By Teacher Gilbert</div>
       </div>
-      <div>
-        <h1>Tongue Twister Trainer</h1>
-        <p>Speak clearly — accuracy, clarity & speed scored out of 10</p>
-      </div>
-    </header>
-
-    <main>
-      <!-- HOME / LEVEL SELECTOR -->
-      <section id="homePage">
-        <div class="title-row">
-          <h2>Choose difficulty</h2>
-          <div class="subtitle">Pick a level to begin — then press the mic</div>
-        </div>
-
-        <div style="display:flex;justify-content:center;margin-bottom:12px;">
-          <div class="controls" role="tablist" aria-label="difficulty levels">
-            <button id="btnEasy" class="btn-easy">Easy</button>
-            <button id="btnMed" class="btn-medium">Medium</button>
-            <button id="btnHard" class="btn-hard">Hard</button>
-          </div>
-        </div>
-
-        <div style="display:flex;justify-content:center;gap:12px;">
-          <button id="homeBack" class="nav-under-btn nav-back" style="padding:10px 14px;border-radius:10px;border:1px solid #e6eefc;background:white;color:var(--accent);font-weight:700;cursor:pointer;">Back</button>
-          <!-- intentionally NO Next on the main level selector page per your request -->
-        </div>
-
-        <div style="height:12px;"></div>
-        <div class="footer-note"><strong>Tongue Twister Trainer</strong> — Created by <strong>Speak Up! Drama</strong></div>
-      </section>
-
-      <!-- TRAINER PAGE -->
-      <section id="trainerPage" class="hidden" aria-live="polite">
-        <div class="title-row">
-          <h2 id="pageTitle">Tongue Twister Trainer</h2>
-          <div class="subtitle" id="levelLabel">Level</div>
-        </div>
-
-        <div class="twister-card">
-          <div id="twisterText" class="twister-text">Press a difficulty to begin</div>
-
-          <div class="nav-under" style="margin-top:12px;">
-            <button id="btnBack" title="Previous twister">← Back</button>
-            <button id="btnNext">Next →</button>
-            <button id="btnHome" style="background:#fff;border:1px solid #e6eefc;color:var(--accent);padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;">Home</button>
-          </div>
-
-          <div class="instruction">Cakap Betul Betul, Bulat Bulat!</div>
-        </div>
-
-        <!-- Stage -->
-        <div class="stage" aria-live="polite" style="margin-bottom:4px;">
-          <div class="left">
-            <button id="micBtn" class="mic-button" aria-pressed="false" title="Tap to record">
-              <svg id="micIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" style="display:block">
-                <path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M19 11v1a7 7 0 0 1-14 0v-1" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M12 19v3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <span id="micLabel" style="display:block;font-size:12px;margin-top:6px;">Tap to record</span>
-            </button>
-          </div>
-
-          <div class="center">
-            <div class="mic-meter-wrap" aria-hidden="true">
-              <div id="micMeterBar" class="mic-meter" style="height:6px; transform:rotate(-90deg); width:120px; transform-origin:left center;"></div>
-            </div>
-          </div>
-
-          <div class="right">
-            <div style="text-align:center;">
-              <div style="font-size:11px;color:#64748b;font-weight:700;margin-bottom:6px;">Score</div>
-              <div id="scoreRing" class="score-ring" style="--score-percent:0%;">
-                <div class="score-inner" id="scoreInner">0</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="transcript" class="transcript" aria-live="polite"></div>
-
-        <div class="footer-note"><strong>Tongue Twister Trainer</strong> — Created by <strong>Speak Up! Drama</strong></div>
-      </section>
-    </main>
+    </div>
   </div>
 
 <script>
-/* LOGO config - tries local PNG first, then GitHub raw PDF */
-const GITHUB_LOGO_PDF = 'https://raw.githubusercontent.com/akademimuzikshahalam-rgb/tongue-twister-trainer/main/Speak%20Up%20Logo.pdf';
+/* Logo loading: try local PNG first, else fallback to GitHub raw PDF as raster via object is awkward,
+   but we still try the PDF by constructing its raw URL (useful if PNG isn't in the repo).
+*/
 const LOCAL_PNG = './Speak Up Logo.png';
+const GITHUB_PDF_RAW = 'https://raw.githubusercontent.com/akademimuzikshahalam-rgb/tongue-twister-trainer/main/Speak%20Up%20Logo.pdf';
 const logoImg = document.getElementById('logoImg');
-const logoObj = document.getElementById('logoObj');
 
 (function loadLogo(){
-  const test = new Image();
-  test.onload = () => { logoImg.src = LOCAL_PNG; logoImg.style.display='inline-block'; logoObj.style.display='none'; };
-  test.onerror = () => { logoImg.style.display='none'; logoObj.data = GITHUB_LOGO_PDF; logoObj.style.display = 'inline-block'; };
-  test.src = LOCAL_PNG;
+  const imgTest = new Image();
+  imgTest.onload = () => {
+    logoImg.src = LOCAL_PNG;
+  };
+  imgTest.onerror = () => {
+    // fallback: try to convert PDF -> PNG via GitHub raw (browsers won't show PDF in <img>)
+    // Instead, try to request a PNG at the same path (common if you upload both)
+    const altPng = GITHUB_PDF_RAW.replace('.pdf', '.png');
+    const alt = new Image();
+    alt.onload = () => { logoImg.src = altPng; };
+    alt.onerror = () => {
+      // final fallback: use the PDF as a data URI preview is not reliable; keep a simple empty placeholder
+      logoImg.src = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="80"><rect width="100%" height="100%" fill="#fff"/><text x="10" y="45" font-family="Poppins, sans-serif" font-weight="700" font-size="28" fill="#111">SPEAK UP!</text></svg>');
+    };
+    alt.src = altPng;
+  };
+  imgTest.src = LOCAL_PNG;
 })();
 
-/* Tongue twisters lists */
-const twisters = {
-  easy: [
-    "She sells seashells.",
-    "Blue bird flew.",
-    "Kitty cat chased the rat.",
-    "Yellow sun shines.",
-    "Tiny toy train."
-  ],
-  medium: [
-    "She sells seashells at the seashore, the shells she sells are surely seashells",
-    "Peter Piper picked a peck of pickled peppers",
-    "Red lorry, yellow lorry, red lorry, yellow lorry",
-    "Unique New York, unique New York",
-    "Toy boat, toy boat, toy boat"
-  ],
-  hard: [
-    "How much wood would a woodchuck chuck if a woodchuck could chuck wood",
-    "The sixth sick sheik's sixth sheep's sick",
-    "I saw Susie sitting in a shoeshine shop where she shines shoes and socks for cash",
-    "Irish wristwatch, Irish wristwatch",
-    "Red leather, yellow leather"
-  ]
-};
-
-/* UI references & state */
-const homePage = document.getElementById('homePage');
-const trainerPage = document.getElementById('trainerPage');
-const levelLabel = document.getElementById('levelLabel');
-const pageTitle = document.getElementById('pageTitle');
-
+/* Small interactivity: update challenge counter when user clicks difficulty */
 const btnEasy = document.getElementById('btnEasy');
 const btnMed  = document.getElementById('btnMed');
 const btnHard = document.getElementById('btnHard');
-const homeBack = document.getElementById('homeBack');
+const challengeIndex = document.getElementById('challengeIndex');
+const challengeTotal = document.getElementById('challengeTotal');
+const bigFooter = document.getElementById('bigFooter');
 
-const btnBack = document.getElementById('btnBack');
-const btnNext = document.getElementById('btnNext');
-const btnHome = document.getElementById('btnHome');
-const twisterTextEl = document.getElementById('twisterText');
+let total = 6;
+challengeTotal.innerText = total;
+let idx = 1;
+challengeIndex.innerText = idx;
 
-const micBtn = document.getElementById('micBtn');
-const micLabel = document.getElementById('micLabel');
-const micMeterBar = document.getElementById('micMeterBar');
-
-const scoreInnerEl = document.getElementById('scoreInner');
-const scoreRing = document.getElementById('scoreRing');
-
-const transcriptBox = document.getElementById('transcript');
-
-let currentLevel = null;
-let currentIndex = 0;
-
-/* Home page back (you may wire it to another action; keep it as a no-op or go to previous app area) */
-homeBack.addEventListener('click', ()=> {
-  // Currently there is no previous area — just show a quick message
-  alert('You are on the main selector page.');
-});
-
-/* level selection */
-btnEasy.addEventListener('click', ()=> startLevel('easy'));
-btnMed.addEventListener('click', ()=> startLevel('medium'));
-btnHard.addEventListener('click', ()=> startLevel('hard'));
-
-/* trainer nav */
-btnBack.addEventListener('click', ()=> trainerNavigate(-1));
-btnNext.addEventListener('click', ()=> trainerNavigate(1));
-btnHome.addEventListener('click', ()=> {
-  stopRecording(); // ensure mic off
-  showHome();
-});
-
-function startLevel(level){
-  currentLevel = level;
-  currentIndex = 0;
-  showTrainer();
-  updateLevelUI();
-  showTwister();
+function choose(level){
+  // visual feedback: briefly animate footer and increase challenge count (demo)
+  bigFooter.innerText = `You chose ${level.toUpperCase()} — Created By Teacher Gilbert`;
+  // increment demo counter
+  idx = 1;
+  challengeIndex.innerText = idx;
+  // navigate to trainer page if you want (not implemented here — just demo)
+  bigFooter.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}], {duration:420, easing:'ease', iterations:1});
 }
 
-/* navigation for twisters within trainer */
-function trainerNavigate(delta){
-  if (!currentLevel) return;
-  const list = twisters[currentLevel];
-  currentIndex = (currentIndex + delta + list.length) % list.length;
-  showTwister();
-}
-
-function showHome(){
-  homePage.classList.remove('hidden');
-  trainerPage.classList.add('hidden');
-  currentLevel = null;
-  currentIndex = 0;
-  resetScore();
-}
-
-function showTrainer(){
-  homePage.classList.add('hidden');
-  trainerPage.classList.remove('hidden');
-}
-
-function updateLevelUI(){
-  levelLabel.innerText = `Level: ${capitalize(currentLevel)}`;
-  pageTitle.innerText = `${capitalize(currentLevel)} — Tongue Twister Trainer`;
-  // visual emphasis for level buttons (on home)
-  [btnEasy, btnMed, btnHard].forEach(b => b.style.opacity = '1');
-  if (currentLevel === 'easy') { btnMed.style.opacity = btnHard.style.opacity = '0.7'; }
-  if (currentLevel === 'medium') { btnEasy.style.opacity = btnHard.style.opacity = '0.7'; }
-  if (currentLevel === 'hard') { btnEasy.style.opacity = btnMed.style.opacity = '0.7'; }
-}
-
-/* show current twister */
-function showTwister(){
-  twisterTextEl.innerText = twisters[currentLevel][currentIndex];
-  transcriptBox.style.display = 'none';
-  transcriptBox.innerText = '';
-  resetScore();
-}
-
-/* ========== Microphone, meter & speech recognition ========== */
-let recognition = null;
-let isListening = false;
-let transcript = '';
-let startTime = 0;
-let stopTime = 0;
-
-/* audio analyser for live mic level */
-let audioCtx = null;
-let analyser = null;
-let meterStream = null;
-let meterAnimationId = null;
-
-async function setupMicMeter() {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert('getUserMedia is not supported in this browser. Please use Chrome or Edge.');
-    return false;
-  }
-  if (meterStream) return true;
-  try {
-    meterStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const src = audioCtx.createMediaStreamSource(meterStream);
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048;
-    src.connect(analyser);
-    drawMeter();
-    return true;
-  } catch (err) {
-    console.warn('Microphone permission or error', err);
-    alert('Microphone permission denied or not available.');
-    return false;
-  }
-}
-
-function stopMicMeter() {
-  if (meterAnimationId) cancelAnimationFrame(meterAnimationId);
-  meterAnimationId = null;
-  if (analyser){ try { analyser.disconnect(); } catch(e){} analyser=null; }
-  if (meterStream){ try { meterStream.getTracks().forEach(t=>t.stop()); } catch(e){} meterStream=null; }
-  micMeterBar.style.transform = 'rotate(-90deg) scaleX(0.03)';
-}
-
-function drawMeter() {
-  if (!analyser) return;
-  const data = new Uint8Array(analyser.fftSize);
-  function loop(){
-    analyser.getByteTimeDomainData(data);
-    let sum = 0;
-    for (let i=0;i<data.length;i++){
-      const v = (data[i]-128)/128;
-      sum += v*v;
-    }
-    const rms = Math.sqrt(sum / data.length);
-    const level = Math.min(1, Math.max(0.03, rms * 6)); // 0.03..1
-    micMeterBar.style.transform = `rotate(-90deg) scaleX(${level})`;
-    meterAnimationId = requestAnimationFrame(loop);
-  }
-  loop();
-}
-
-/* SpeechRecognition */
-function initRecognition() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert('SpeechRecognition API not supported. Please use Chrome or Edge.');
-    return false;
-  }
-  recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = 'en-US';
-  recognition.maxAlternatives = 1;
-
-  recognition.onstart = ()=> {
-    isListening = true;
-    micBtn.classList.add('listening');
-    micBtn.setAttribute('aria-pressed','true');
-    micLabel.innerText = 'Listening...';
-    transcript = '';
-    startTime = performance.now();
-  };
-
-  recognition.onresult = (ev)=> {
-    let interim = '';
-    for (let i = ev.resultIndex; i < ev.results.length; i++) {
-      const segment = ev.results[i][0].transcript.trim();
-      if (ev.results[i].isFinal) transcript += segment + ' ';
-      else interim += segment + ' ';
-    }
-    const display = (transcript + interim).trim();
-    if (display.length) {
-      transcriptBox.style.display = 'block';
-      transcriptBox.innerText = display;
-    }
-  };
-
-  recognition.onerror = (e) => {
-    console.warn('recognition error', e);
-    micLabel.innerText = 'Error';
-    stopRecording();
-  };
-
-  recognition.onend = ()=> {
-    if (isListening) {
-      // attempt to restart for continuous listening
-      try { recognition.start(); } catch(e) { console.warn('restart failed', e); }
-    } else {
-      stopTime = stopTime || performance.now();
-      finalizeResult();
-    }
-  };
-
-  return true;
-}
-
-/* mic button behavior */
-micBtn.addEventListener('click', async ()=> {
-  if (!currentLevel) {
-    alert('Please select a difficulty (Easy / Medium / Hard) first.');
-    return;
-  }
-  if (isListening) {
-    stopRecording();
-  } else {
-    const ok = await setupMicMeter();
-    if (!ok) return;
-    if (!recognition) {
-      const okRec = initRecognition();
-      if (!okRec) return;
-    }
-    try {
-      transcript = '';
-      transcriptBox.style.display = 'none';
-      recognition.start();
-    } catch (err) {
-      console.warn('recognition.start error', err);
-      try { recognition.stop(); } catch(e){}
-      setTimeout(()=> { try { recognition.start(); } catch(e){ console.warn('start retry failed', e);} }, 200);
-    }
-  }
-});
-
-function stopRecording() {
-  if (!isListening) return;
-  isListening = false;
-  micBtn.classList.remove('listening');
-  micBtn.setAttribute('aria-pressed','false');
-  micLabel.innerText = 'Tap to record';
-  try {
-    if (recognition) recognition.stop();
-  } catch(e){ console.warn(e); }
-  stopTime = performance.now();
-  stopMicMeter();
-}
-
-/* finalize & scoring */
-function finalizeResult(){
-  stopTime = stopTime || performance.now();
-  const durationSec = Math.max(0.5, (stopTime - startTime) / 1000);
-  const original = twisters[currentLevel][currentIndex];
-  showResult(original, (transcript||'').trim(), durationSec);
-}
-
-/* scoring & UI result */
-function showResult(original, spoken, durationSec) {
-  const score = calculateCompositeScore(original, spoken, durationSec);
-  scoreInnerEl.innerText = score;
-  scoreRing.style.setProperty('--score-percent', (score*10) + '%');
-
-  if (!spoken || spoken.length === 0) {
-    transcriptBox.style.display = 'block';
-    transcriptBox.innerText = 'No speech detected. Try again.';
-  }
-
-  if (score >= 10) {
-    playFireworks(true);
-  } else if (score >= 8) {
-    playFireworks(false);
-  }
-}
-
-function calculateCompositeScore(original, spoken, durationSec) {
-  const oWords = original.toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(Boolean);
-  const sWords = (spoken||'').toLowerCase().replace(/[^\w\s']/g,'').split(/\s+/).filter(Boolean);
-  if (sWords.length < Math.max(1, Math.floor(oWords.length * 0.45))) return 1;
-
-  let exactMatches = 0;
-  let claritySum = 0;
-  const used = new Set();
-  oWords.forEach(ow => {
-    let bestIdx = -1, bestSim = 0;
-    for (let i=0;i<sWords.length;i++){
-      if (used.has(i)) continue;
-      const sim = levenshteinSimilarity(ow, sWords[i]);
-      if (sim > bestSim) { bestSim = sim; bestIdx = i; }
-    }
-    if (bestIdx >= 0 && bestSim >= 0.5) {
-      used.add(bestIdx);
-      claritySum += bestSim;
-      if (bestSim >= 0.85) exactMatches++;
-    }
-  });
-
-  const accuracy = exactMatches / oWords.length;
-  const clarity = (used.size > 0) ? (claritySum / used.size) : 0;
-  const wps = (sWords.length) / Math.max(0.5, durationSec);
-  const ideal = 2.0; const maxDev = 2.0;
-  const speedScore = Math.max(0, 1 - (Math.abs(wps - ideal) / maxDev));
-
-  const wAcc = 0.6, wClarity = 0.2, wSpeed = 0.2;
-  const combined = (wAcc * accuracy) + (wClarity * clarity) + (wSpeed * speedScore);
-  let raw = Math.round(combined * 10);
-  raw = Math.max(1, Math.min(10, raw));
-  return raw;
-}
-
-/* levenshtein helpers */
-function levenshteinSimilarity(a,b) {
-  a=a||''; b=b||'';
-  const longer = a.length >= b.length ? a : b;
-  const shorter = a.length >= b.length ? b : a;
-  if (longer.length === 0) return 1;
-  const ed = getEditDistance(longer, shorter);
-  return (longer.length - ed) / longer.length;
-}
-function getEditDistance(a,b){
-  const costs = new Array(b.length+1);
-  for (let j=0;j<=b.length;j++) costs[j]=j;
-  for (let i=1;i<=a.length;i++){
-    let prev = i;
-    for (let j=1;j<=b.length;j++){
-      let curr = costs[j];
-      let add = a.charAt(i-1) === b.charAt(j-1) ? 0 : 1;
-      const val = Math.min(Math.min(costs[j]+1, prev+1), costs[j-1]+add);
-      costs[j-1] = prev;
-      prev = val;
-      if (j === b.length) costs[j] = prev;
-    }
-  }
-  return costs[b.length];
-}
-
-/* reset score UI */
-function resetScore(){
-  scoreInnerEl.innerText = '0';
-  scoreRing.style.setProperty('--score-percent','0%');
-  transcriptBox.style.display = 'none';
-  transcriptBox.innerText = '';
-  // reset mic meter visuals
-  micMeterBar.style.transform = 'rotate(-90deg) scaleX(0.03)';
-}
-
-/* Fireworks visuals + audio */
-function playFireworks(perfect){
-  const particleCount = perfect ? 110 : 60;
-  const travelDist = perfect ? 1400 : 800;
-  createParticles(particleCount, travelDist, perfect);
-  playFireworkSound(perfect);
-}
-function createParticles(count, travelDist, perfect){
-  const container = document.createElement('div');
-  Object.assign(container.style, {
-    position:'fixed', left:0, top:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:9999
-  });
-  document.body.appendChild(container);
-  const colors = ['#fbbf24','#f97316','#fb7185','#60a5fa','#34d399','#a78bfa','#fcd34d'];
-  for (let i=0;i<count;i++){
-    const p = document.createElement('div');
-    p.style.position='absolute';
-    p.style.left = (window.innerWidth*0.5 + (Math.random()*300 -150)) + 'px';
-    p.style.top  = (window.innerHeight*0.35 + (Math.random()*200 -100)) + 'px';
-    const size = Math.random()*8 + 6;
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
-    p.style.borderRadius = '50%';
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.style.boxShadow = '0 0 10px ' + p.style.background;
-    container.appendChild(p);
-    const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random()*travelDist;
-    const tx = Math.cos(angle) * dist;
-    const ty = Math.sin(angle) * dist;
-    const dur = perfect ? 1600 + Math.random()*800 : 800 + Math.random()*500;
-    p.animate([
-      { transform:'translate(0,0) scale(1)', opacity:1 },
-      { transform:`translate(${tx}px, ${ty}px) scale(0.3)`, opacity:0 }
-    ], { duration: dur, easing: 'cubic-bezier(.2,.8,.2,1)' });
-    setTimeout(()=> p.remove(), perfect ? 2400 : 1100);
-  }
-  setTimeout(()=> container.remove(), perfect ? 2600 : 1200);
-}
-function playFireworkSound(perfect){
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const now = ctx.currentTime;
-    const bursts = perfect ? 10 : 6;
-    for (let b=0;b<bursts;b++){
-      const t = now + b * (perfect ? 0.18 : 0.2);
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(400 + Math.random()*800, t);
-      o.frequency.exponentialRampToValueAtTime(60, t + (perfect?0.6:0.35));
-      g.gain.setValueAtTime(0.22, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + (perfect?0.9:0.4));
-      o.connect(g); g.connect(ctx.destination);
-      o.start(t); o.stop(t + (perfect?1.0:0.45));
-    }
-    if (perfect){
-      const ping1 = ctx.createOscillator();
-      const g1 = ctx.createGain();
-      ping1.type='triangle';
-      ping1.frequency.setValueAtTime(1000, now + 0.18);
-      g1.gain.setValueAtTime(0.16, now+0.18);
-      g1.gain.exponentialRampToValueAtTime(0.001, now+0.9);
-      ping1.connect(g1); g1.connect(ctx.destination);
-      ping1.start(now+0.18); ping1.stop(now+0.9);
-    }
-  } catch(e){ console.warn('AudioContext error', e); }
-}
-
-/* utility */
-function capitalize(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
-
-/* initial state */
-showHome();
-resetScore();
-
+btnEasy.addEventListener('click', ()=> choose('easy'));
+btnMed.addEventListener('click', ()=> choose('medium'));
+btnHard.addEventListener('click', ()=> choose('hard'));
 </script>
 </body>
 </html>
